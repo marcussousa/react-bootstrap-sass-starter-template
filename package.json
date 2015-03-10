@@ -1,0 +1,23 @@
+{
+  "name": "react-bootstrap-sass-starter-template",
+  "version": "0.0.1",
+  "description": "A starter template using React + React-Bootstrap + Sass-Bootstrap",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcussousa/react-bootstrap-sass-starter-template"
+  },
+  "author": "Marcus Sousa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marcussousa/react-bootstrap-sass-starter-template/issues"
+  },
+  "homepage": "https://github.com/marcussousa/react-bootstrap-sass-starter-template",
+  "dependencies": {},
+  "devDependencies": {
+    "bootstrap-sass": "~3.1.1",
+    "gulp": "^3.8.11",
+    "gulp-ruby-sass": "~1.0.0-alpha",
+    "react": "^0.12.2"
+  }
+}
