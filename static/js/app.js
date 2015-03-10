@@ -68,6 +68,487 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
+},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/Alert.js":[function(require,module,exports){
+var React = require('react');
+var joinClasses = require('./utils/joinClasses');
+var classSet = require('./utils/classSet');
+var BootstrapMixin = require('./BootstrapMixin');
+
+
+var Alert = React.createClass({displayName: "Alert",
+  mixins: [BootstrapMixin],
+
+  propTypes: {
+    onDismiss: React.PropTypes.func,
+    dismissAfter: React.PropTypes.number
+  },
+
+  getDefaultProps: function () {
+    return {
+      bsClass: 'alert',
+      bsStyle: 'info'
+    };
+  },
+
+  renderDismissButton: function () {
+    return (
+      React.createElement("button", {
+        type: "button", 
+        className: "close", 
+        onClick: this.props.onDismiss, 
+        "aria-hidden": "true"}, 
+        "×"
+      )
+    );
+  },
+
+  render: function () {
+    var classes = this.getBsClassSet();
+    var isDismissable = !!this.props.onDismiss;
+
+    classes['alert-dismissable'] = isDismissable;
+
+    return (
+      React.createElement("div", React.__spread({},  this.props, {className: joinClasses(this.props.className, classSet(classes))}), 
+        isDismissable ? this.renderDismissButton() : null, 
+        this.props.children
+      )
+    );
+  },
+
+  componentDidMount: function() {
+    if (this.props.dismissAfter && this.props.onDismiss) {
+      this.dismissTimer = setTimeout(this.props.onDismiss, this.props.dismissAfter);
+    }
+  },
+
+  componentWillUnmount: function() {
+    clearTimeout(this.dismissTimer);
+  }
+});
+
+module.exports = Alert;
+},{"./BootstrapMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/BootstrapMixin.js","./utils/classSet":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/utils/classSet.js","./utils/joinClasses":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/utils/joinClasses.js","react":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/react.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/BootstrapMixin.js":[function(require,module,exports){
+var React = require('react');
+var constants = require('./constants');
+
+var BootstrapMixin = {
+  propTypes: {
+    bsClass: React.PropTypes.oneOf(Object.keys(constants.CLASSES)),
+    bsStyle: React.PropTypes.oneOf(Object.keys(constants.STYLES)),
+    bsSize: React.PropTypes.oneOf(Object.keys(constants.SIZES))
+  },
+
+  getBsClassSet: function () {
+    var classes = {};
+
+    var bsClass = this.props.bsClass && constants.CLASSES[this.props.bsClass];
+    if (bsClass) {
+      classes[bsClass] = true;
+
+      var prefix = bsClass + '-';
+
+      var bsSize = this.props.bsSize && constants.SIZES[this.props.bsSize];
+      if (bsSize) {
+        classes[prefix + bsSize] = true;
+      }
+
+      var bsStyle = this.props.bsStyle && constants.STYLES[this.props.bsStyle];
+      if (this.props.bsStyle) {
+        classes[prefix + bsStyle] = true;
+      }
+    }
+
+    return classes;
+  }
+};
+
+module.exports = BootstrapMixin;
+},{"./constants":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/constants.js","react":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/react.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/constants.js":[function(require,module,exports){
+module.exports = {
+  CLASSES: {
+    'alert': 'alert',
+    'button': 'btn',
+    'button-group': 'btn-group',
+    'button-toolbar': 'btn-toolbar',
+    'column': 'col',
+    'input-group': 'input-group',
+    'form': 'form',
+    'glyphicon': 'glyphicon',
+    'label': 'label',
+    'list-group-item': 'list-group-item',
+    'panel': 'panel',
+    'panel-group': 'panel-group',
+    'progress-bar': 'progress-bar',
+    'nav': 'nav',
+    'navbar': 'navbar',
+    'modal': 'modal',
+    'row': 'row',
+    'well': 'well'
+  },
+  STYLES: {
+    'default': 'default',
+    'primary': 'primary',
+    'success': 'success',
+    'info': 'info',
+    'warning': 'warning',
+    'danger': 'danger',
+    'link': 'link',
+    'inline': 'inline',
+    'tabs': 'tabs',
+    'pills': 'pills'
+  },
+  SIZES: {
+    'large': 'lg',
+    'medium': 'md',
+    'small': 'sm',
+    'xsmall': 'xs'
+  },
+  GLYPHS: [
+    'asterisk',
+    'plus',
+    'euro',
+    'eur',
+    'minus',
+    'cloud',
+    'envelope',
+    'pencil',
+    'glass',
+    'music',
+    'search',
+    'heart',
+    'star',
+    'star-empty',
+    'user',
+    'film',
+    'th-large',
+    'th',
+    'th-list',
+    'ok',
+    'remove',
+    'zoom-in',
+    'zoom-out',
+    'off',
+    'signal',
+    'cog',
+    'trash',
+    'home',
+    'file',
+    'time',
+    'road',
+    'download-alt',
+    'download',
+    'upload',
+    'inbox',
+    'play-circle',
+    'repeat',
+    'refresh',
+    'list-alt',
+    'lock',
+    'flag',
+    'headphones',
+    'volume-off',
+    'volume-down',
+    'volume-up',
+    'qrcode',
+    'barcode',
+    'tag',
+    'tags',
+    'book',
+    'bookmark',
+    'print',
+    'camera',
+    'font',
+    'bold',
+    'italic',
+    'text-height',
+    'text-width',
+    'align-left',
+    'align-center',
+    'align-right',
+    'align-justify',
+    'list',
+    'indent-left',
+    'indent-right',
+    'facetime-video',
+    'picture',
+    'map-marker',
+    'adjust',
+    'tint',
+    'edit',
+    'share',
+    'check',
+    'move',
+    'step-backward',
+    'fast-backward',
+    'backward',
+    'play',
+    'pause',
+    'stop',
+    'forward',
+    'fast-forward',
+    'step-forward',
+    'eject',
+    'chevron-left',
+    'chevron-right',
+    'plus-sign',
+    'minus-sign',
+    'remove-sign',
+    'ok-sign',
+    'question-sign',
+    'info-sign',
+    'screenshot',
+    'remove-circle',
+    'ok-circle',
+    'ban-circle',
+    'arrow-left',
+    'arrow-right',
+    'arrow-up',
+    'arrow-down',
+    'share-alt',
+    'resize-full',
+    'resize-small',
+    'exclamation-sign',
+    'gift',
+    'leaf',
+    'fire',
+    'eye-open',
+    'eye-close',
+    'warning-sign',
+    'plane',
+    'calendar',
+    'random',
+    'comment',
+    'magnet',
+    'chevron-up',
+    'chevron-down',
+    'retweet',
+    'shopping-cart',
+    'folder-close',
+    'folder-open',
+    'resize-vertical',
+    'resize-horizontal',
+    'hdd',
+    'bullhorn',
+    'bell',
+    'certificate',
+    'thumbs-up',
+    'thumbs-down',
+    'hand-right',
+    'hand-left',
+    'hand-up',
+    'hand-down',
+    'circle-arrow-right',
+    'circle-arrow-left',
+    'circle-arrow-up',
+    'circle-arrow-down',
+    'globe',
+    'wrench',
+    'tasks',
+    'filter',
+    'briefcase',
+    'fullscreen',
+    'dashboard',
+    'paperclip',
+    'heart-empty',
+    'link',
+    'phone',
+    'pushpin',
+    'usd',
+    'gbp',
+    'sort',
+    'sort-by-alphabet',
+    'sort-by-alphabet-alt',
+    'sort-by-order',
+    'sort-by-order-alt',
+    'sort-by-attributes',
+    'sort-by-attributes-alt',
+    'unchecked',
+    'expand',
+    'collapse-down',
+    'collapse-up',
+    'log-in',
+    'flash',
+    'log-out',
+    'new-window',
+    'record',
+    'save',
+    'open',
+    'saved',
+    'import',
+    'export',
+    'send',
+    'floppy-disk',
+    'floppy-saved',
+    'floppy-remove',
+    'floppy-save',
+    'floppy-open',
+    'credit-card',
+    'transfer',
+    'cutlery',
+    'header',
+    'compressed',
+    'earphone',
+    'phone-alt',
+    'tower',
+    'stats',
+    'sd-video',
+    'hd-video',
+    'subtitles',
+    'sound-stereo',
+    'sound-dolby',
+    'sound-5-1',
+    'sound-6-1',
+    'sound-7-1',
+    'copyright-mark',
+    'registration-mark',
+    'cloud-download',
+    'cloud-upload',
+    'tree-conifer',
+    'tree-deciduous',
+    'cd',
+    'save-file',
+    'open-file',
+    'level-up',
+    'copy',
+    'paste',
+    'alert',
+    'equalizer',
+    'king',
+    'queen',
+    'pawn',
+    'bishop',
+    'knight',
+    'baby-formula',
+    'tent',
+    'blackboard',
+    'bed',
+    'apple',
+    'erase',
+    'hourglass',
+    'lamp',
+    'duplicate',
+    'piggy-bank',
+    'scissors',
+    'bitcoin',
+    'yen',
+    'ruble',
+    'scale',
+    'ice-lolly',
+    'ice-lolly-tasted',
+    'education',
+    'option-horizontal',
+    'option-vertical',
+    'menu-hamburger',
+    'modal-window',
+    'oil',
+    'grain',
+    'sunglasses',
+    'text-size',
+    'text-color',
+    'text-background',
+    'object-align-top',
+    'object-align-bottom',
+    'object-align-horizontal',
+    'object-align-left',
+    'object-align-vertical',
+    'object-align-right',
+    'triangle-right',
+    'triangle-left',
+    'triangle-bottom',
+    'triangle-top',
+    'console',
+    'superscript',
+    'subscript',
+    'menu-left',
+    'menu-right',
+    'menu-down',
+    'menu-up'
+  ]
+};
+
+},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/utils/classSet.js":[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This file contains an unmodified version of:
+ * https://github.com/facebook/react/blob/v0.12.0/src/vendor/stubs/cx.js
+ *
+ * This source code is licensed under the BSD-style license found here:
+ * https://github.com/facebook/react/blob/v0.12.0/LICENSE
+ * An additional grant of patent rights can be found here:
+ * https://github.com/facebook/react/blob/v0.12.0/PATENTS
+ */
+
+/**
+ * This function is used to mark string literals representing CSS class names
+ * so that they can be transformed statically. This allows for modularization
+ * and minification of CSS class names.
+ *
+ * In static_upstream, this function is actually implemented, but it should
+ * eventually be replaced with something more descriptive, and the transform
+ * that is used in the main stack should be ported for use elsewhere.
+ *
+ * @param string|object className to modularize, or an object of key/values.
+ *                      In the object case, the values are conditions that
+ *                      determine if the className keys should be included.
+ * @param [string ...]  Variable list of classNames in the string case.
+ * @return string       Renderable space-separated CSS className.
+ */
+function cx(classNames) {
+  if (typeof classNames == 'object') {
+    return Object.keys(classNames).filter(function(className) {
+      return classNames[className];
+    }).join(' ');
+  } else {
+    return Array.prototype.join.call(arguments, ' ');
+  }
+}
+
+module.exports = cx;
+},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/utils/joinClasses.js":[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This file contains an unmodified version of:
+ * https://github.com/facebook/react/blob/v0.12.0/src/utils/joinClasses.js
+ *
+ * This source code is licensed under the BSD-style license found here:
+ * https://github.com/facebook/react/blob/v0.12.0/LICENSE
+ * An additional grant of patent rights can be found here:
+ * https://github.com/facebook/react/blob/v0.12.0/PATENTS
+ */
+
+"use strict";
+
+/**
+ * Combines multiple className strings into one.
+ * http://jsperf.com/joinclasses-args-vs-array
+ *
+ * @param {...?string} classes
+ * @return {string}
+ */
+function joinClasses(className/*, ... */) {
+  if (!className) {
+    className = '';
+  }
+  var nextClass;
+  var argLength = arguments.length;
+  if (argLength > 1) {
+    for (var ii = 1; ii < argLength; ii++) {
+      nextClass = arguments[ii];
+      if (nextClass) {
+        className = (className ? className + ' ' : '') + nextClass;
+      }
+    }
+  }
+  return className;
+}
+
+module.exports = joinClasses;
+
 },{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/AutoFocusMixin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -18300,6 +18781,7 @@ module.exports = require('./lib/React');
 "use strict";
 
 var React = require("react"),
+    Alert = require("react-bootstrap/lib/Alert"),
     Page = React.createClass({
     displayName: "Page",
 
@@ -18313,13 +18795,17 @@ var React = require("react"),
                 "A starter template using React + React-Bootstrap + Sass-Bootstrap"
             ),
             React.createElement(
-                "p",
-                null,
-                " -> go to Page.jsx"
+                Alert,
+                { bsStyle: "info" },
+                React.createElement(
+                    "p",
+                    null,
+                    " -> go to Page.jsx"
+                )
             )
         );
     }
 });
 module.exports = Page;
 
-},{"react":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/react.js"}]},{},["./scripts/app.jsx"]);
+},{"react":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/react.js","react-bootstrap/lib/Alert":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/Alert.js"}]},{},["./scripts/app.jsx"]);
