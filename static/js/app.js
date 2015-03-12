@@ -2,13 +2,82 @@
 "use strict";
 
 var React = require("react");
+
 window.React = React;
 
-var Page = require("./components/Page.jsx");
+// Routers
+var Router = require("react-router");
+var DefaultRoute = Router.DefaultRoute;
+var Link = Router.Link;
+var Route = Router.Route;
+var RouteHandler = Router.RouteHandler;
+var State = Router.State;
 
-React.render(React.createElement(Page, null), document.getElementById("content"));
+// BS Components
+var Navbar = require("react-bootstrap/lib/Navbar"),
+    Nav = require("react-bootstrap/lib/Nav");
 
-},{"./components/Page.jsx":"/Users/Intelie/Workspace/pessoal/react-starter/scripts/components/Page.jsx","react":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/react.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js":[function(require,module,exports){
+// App Components
+var Page = require("./components/Page.jsx"),
+    Sample = require("./components/Sample.jsx");
+
+var NavLink = React.createClass({
+    displayName: "NavLink",
+
+    mixins: [State],
+
+    render: function render() {
+        var isActive = this.isActive(this.props.to, this.props.params, this.props.query);
+        var className = isActive ? "active" : "";
+        var link = React.createElement(Link, this.props);
+        return React.createElement(
+            "li",
+            { className: className },
+            link
+        );
+    }
+});
+
+var App = React.createClass({
+    displayName: "App",
+
+    render: function render() {
+
+        return React.createElement(
+            "span",
+            null,
+            React.createElement(
+                Navbar,
+                { brand: "marcussousa", inverse: true, toggleNavKey: 0 },
+                React.createElement(
+                    Nav,
+                    { right: true },
+                    React.createElement(
+                        NavLink,
+                        { to: "page" },
+                        "Sample Page"
+                    )
+                )
+            ),
+            React.createElement(RouteHandler, null)
+        );
+    }
+});
+
+var routes = React.createElement(
+    Route,
+    { name: "app", path: "/", handler: App },
+    React.createElement(Route, { name: "page", handler: Sample }),
+    React.createElement(DefaultRoute, { handler: Page })
+);
+
+Router.run(routes, function (Handler) {
+    React.render(React.createElement(Handler, null), document.body);
+});
+
+React.render(React.createElement(App, null), document.getElementById("content"));
+
+},{"./components/Page.jsx":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/scripts/components/Page.jsx","./components/Sample.jsx":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/scripts/components/Sample.jsx","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js","react-bootstrap/lib/Nav":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/Nav.js","react-bootstrap/lib/Navbar":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/Navbar.js","react-router":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/index.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js":[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -68,7 +137,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/Alert.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/Alert.js":[function(require,module,exports){
 var React = require('react');
 var joinClasses = require('./utils/joinClasses');
 var classSet = require('./utils/classSet');
@@ -128,7 +197,7 @@ var Alert = React.createClass({displayName: "Alert",
 });
 
 module.exports = Alert;
-},{"./BootstrapMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/BootstrapMixin.js","./utils/classSet":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/utils/classSet.js","./utils/joinClasses":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/utils/joinClasses.js","react":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/react.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/BootstrapMixin.js":[function(require,module,exports){
+},{"./BootstrapMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/BootstrapMixin.js","./utils/classSet":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/classSet.js","./utils/joinClasses":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/joinClasses.js","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/BootstrapMixin.js":[function(require,module,exports){
 var React = require('react');
 var constants = require('./constants');
 
@@ -164,7 +233,388 @@ var BootstrapMixin = {
 };
 
 module.exports = BootstrapMixin;
-},{"./constants":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/constants.js","react":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/react.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/constants.js":[function(require,module,exports){
+},{"./constants":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/constants.js","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/CollapsableMixin.js":[function(require,module,exports){
+var React = require('react');
+var TransitionEvents = require('./utils/TransitionEvents');
+
+var CollapsableMixin = {
+
+  propTypes: {
+    collapsable: React.PropTypes.bool,
+    defaultExpanded: React.PropTypes.bool,
+    expanded: React.PropTypes.bool
+  },
+
+  getInitialState: function () {
+    return {
+      expanded: this.props.defaultExpanded != null ? this.props.defaultExpanded : null,
+      collapsing: false
+    };
+  },
+
+  handleTransitionEnd: function () {
+    this._collapseEnd = true;
+    this.setState({
+      collapsing: false
+    });
+  },
+
+  componentWillReceiveProps: function (newProps) {
+    if (this.props.collapsable && newProps.expanded !== this.props.expanded) {
+      this._collapseEnd = false;
+      this.setState({
+        collapsing: true
+      });
+    }
+  },
+
+  _addEndTransitionListener: function () {
+    var node = this.getCollapsableDOMNode();
+
+    if (node) {
+      TransitionEvents.addEndEventListener(
+        node,
+        this.handleTransitionEnd
+      );
+    }
+  },
+
+  _removeEndTransitionListener: function () {
+    var node = this.getCollapsableDOMNode();
+
+    if (node) {
+      TransitionEvents.removeEndEventListener(
+        node,
+        this.handleTransitionEnd
+      );
+    }
+  },
+
+  componentDidMount: function () {
+    this._afterRender();
+  },
+
+  componentWillUnmount: function () {
+    this._removeEndTransitionListener();
+  },
+
+  componentWillUpdate: function (nextProps) {
+    var dimension = (typeof this.getCollapsableDimension === 'function') ?
+      this.getCollapsableDimension() : 'height';
+    var node = this.getCollapsableDOMNode();
+
+    this._removeEndTransitionListener();
+  },
+
+  componentDidUpdate: function (prevProps, prevState) {
+    this._afterRender();
+  },
+
+  _afterRender: function () {
+    if (!this.props.collapsable) {
+      return;
+    }
+
+    this._addEndTransitionListener();
+    setTimeout(this._updateDimensionAfterRender, 0);
+  },
+
+  _updateDimensionAfterRender: function () {
+    var node = this.getCollapsableDOMNode();
+    if (node) {
+        var dimension = (typeof this.getCollapsableDimension === 'function') ?
+            this.getCollapsableDimension() : 'height';
+        node.style[dimension] = this.isExpanded() ?
+            this.getCollapsableDimensionValue() + 'px' : '0px';
+    }
+  },
+
+  isExpanded: function () {
+    return (this.props.expanded != null) ?
+      this.props.expanded : this.state.expanded;
+  },
+
+  getCollapsableClassSet: function (className) {
+    var classes = {};
+
+    if (typeof className === 'string') {
+      className.split(' ').forEach(function (className) {
+        if (className) {
+          classes[className] = true;
+        }
+      });
+    }
+
+    classes.collapsing = this.state.collapsing;
+    classes.collapse = !this.state.collapsing;
+    classes['in'] = this.isExpanded() && !this.state.collapsing;
+
+    return classes;
+  }
+};
+
+module.exports = CollapsableMixin;
+
+},{"./utils/TransitionEvents":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/TransitionEvents.js","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/Nav.js":[function(require,module,exports){
+var React = require('react');
+var joinClasses = require('./utils/joinClasses');
+var BootstrapMixin = require('./BootstrapMixin');
+var CollapsableMixin = require('./CollapsableMixin');
+var classSet = require('./utils/classSet');
+var domUtils = require('./utils/domUtils');
+var cloneWithProps = require('./utils/cloneWithProps');
+
+var ValidComponentChildren = require('./utils/ValidComponentChildren');
+var createChainedFunction = require('./utils/createChainedFunction');
+
+
+var Nav = React.createClass({displayName: "Nav",
+  mixins: [BootstrapMixin, CollapsableMixin],
+
+  propTypes: {
+    bsStyle: React.PropTypes.oneOf(['tabs','pills']),
+    stacked: React.PropTypes.bool,
+    justified: React.PropTypes.bool,
+    onSelect: React.PropTypes.func,
+    collapsable: React.PropTypes.bool,
+    expanded: React.PropTypes.bool,
+    navbar: React.PropTypes.bool,
+    eventKey: React.PropTypes.any,
+    right: React.PropTypes.bool
+  },
+
+  getDefaultProps: function () {
+    return {
+      bsClass: 'nav'
+    };
+  },
+
+  getCollapsableDOMNode: function () {
+    return this.getDOMNode();
+  },
+
+  getCollapsableDimensionValue: function () {
+    var node = this.refs.ul.getDOMNode(),
+        height = node.offsetHeight,
+        computedStyles = domUtils.getComputedStyles(node);
+
+    return height + parseInt(computedStyles.marginTop, 10) + parseInt(computedStyles.marginBottom, 10);
+  },
+
+  render: function () {
+    var classes = this.props.collapsable ? this.getCollapsableClassSet() : {};
+
+    classes['navbar-collapse'] = this.props.collapsable;
+
+    if (this.props.navbar && !this.props.collapsable) {
+      return (this.renderUl());
+    }
+
+    return (
+      React.createElement("nav", React.__spread({},  this.props, {className: joinClasses(this.props.className, classSet(classes))}), 
+        this.renderUl()
+      )
+    );
+  },
+
+  renderUl: function () {
+    var classes = this.getBsClassSet();
+
+    classes['nav-stacked'] = this.props.stacked;
+    classes['nav-justified'] = this.props.justified;
+    classes['navbar-nav'] = this.props.navbar;
+    classes['pull-right'] = this.props.pullRight;
+    classes['navbar-right'] = this.props.right;
+
+    return (
+      React.createElement("ul", React.__spread({},  this.props, {className: joinClasses(this.props.className, classSet(classes)), ref: "ul"}), 
+        ValidComponentChildren.map(this.props.children, this.renderNavItem)
+      )
+    );
+  },
+
+  getChildActiveProp: function (child) {
+    if (child.props.active) {
+      return true;
+    }
+    if (this.props.activeKey != null) {
+      if (child.props.eventKey == this.props.activeKey) {
+        return true;
+      }
+    }
+    if (this.props.activeHref != null) {
+      if (child.props.href === this.props.activeHref) {
+        return true;
+      }
+    }
+
+    return child.props.active;
+  },
+
+  renderNavItem: function (child, index) {
+    return cloneWithProps(
+      child,
+      {
+        active: this.getChildActiveProp(child),
+        activeKey: this.props.activeKey,
+        activeHref: this.props.activeHref,
+        onSelect: createChainedFunction(child.props.onSelect, this.props.onSelect),
+        ref: child.ref,
+        key: child.key ? child.key : index,
+        navItem: true
+      }
+    );
+  }
+});
+
+module.exports = Nav;
+
+},{"./BootstrapMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/BootstrapMixin.js","./CollapsableMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/CollapsableMixin.js","./utils/ValidComponentChildren":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/ValidComponentChildren.js","./utils/classSet":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/classSet.js","./utils/cloneWithProps":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/cloneWithProps.js","./utils/createChainedFunction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/createChainedFunction.js","./utils/domUtils":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/domUtils.js","./utils/joinClasses":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/joinClasses.js","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/Navbar.js":[function(require,module,exports){
+var React = require('react');
+var joinClasses = require('./utils/joinClasses');
+var BootstrapMixin = require('./BootstrapMixin');
+var classSet = require('./utils/classSet');
+var cloneWithProps = require('./utils/cloneWithProps');
+
+var ValidComponentChildren = require('./utils/ValidComponentChildren');
+var createChainedFunction = require('./utils/createChainedFunction');
+var Nav = require('./Nav');
+
+
+var Navbar = React.createClass({displayName: "Navbar",
+  mixins: [BootstrapMixin],
+
+  propTypes: {
+    fixedTop: React.PropTypes.bool,
+    fixedBottom: React.PropTypes.bool,
+    staticTop: React.PropTypes.bool,
+    inverse: React.PropTypes.bool,
+    fluid: React.PropTypes.bool,
+    role: React.PropTypes.string,
+    componentClass: React.PropTypes.node.isRequired,
+    brand: React.PropTypes.node,
+    toggleButton: React.PropTypes.node,
+    toggleNavKey: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.number
+    ]),
+    onToggle: React.PropTypes.func,
+    navExpanded: React.PropTypes.bool,
+    defaultNavExpanded: React.PropTypes.bool
+  },
+
+  getDefaultProps: function () {
+    return {
+      bsClass: 'navbar',
+      bsStyle: 'default',
+      role: 'navigation',
+      componentClass: 'Nav'
+    };
+  },
+
+  getInitialState: function () {
+    return {
+      navExpanded: this.props.defaultNavExpanded
+    };
+  },
+
+  shouldComponentUpdate: function() {
+    // Defer any updates to this component during the `onSelect` handler.
+    return !this._isChanging;
+  },
+
+  handleToggle: function () {
+    if (this.props.onToggle) {
+      this._isChanging = true;
+      this.props.onToggle();
+      this._isChanging = false;
+    }
+
+    this.setState({
+      navExpanded: !this.state.navExpanded
+    });
+  },
+
+  isNavExpanded: function () {
+    return this.props.navExpanded != null ? this.props.navExpanded : this.state.navExpanded;
+  },
+
+  render: function () {
+    var classes = this.getBsClassSet();
+    var ComponentClass = this.props.componentClass;
+
+    classes['navbar-fixed-top'] = this.props.fixedTop;
+    classes['navbar-fixed-bottom'] = this.props.fixedBottom;
+    classes['navbar-static-top'] = this.props.staticTop;
+    classes['navbar-inverse'] = this.props.inverse;
+
+    return (
+      React.createElement(ComponentClass, React.__spread({},  this.props, {className: joinClasses(this.props.className, classSet(classes))}), 
+        React.createElement("div", {className: this.props.fluid ? 'container-fluid' : 'container'}, 
+          (this.props.brand || this.props.toggleButton || this.props.toggleNavKey != null) ? this.renderHeader() : null, 
+          ValidComponentChildren.map(this.props.children, this.renderChild)
+        )
+      )
+    );
+  },
+
+  renderChild: function (child, index) {
+    return cloneWithProps(child, {
+      navbar: true,
+      collapsable: this.props.toggleNavKey != null && this.props.toggleNavKey === child.props.eventKey,
+      expanded: this.props.toggleNavKey != null && this.props.toggleNavKey === child.props.eventKey && this.isNavExpanded(),
+      key: child.key ? child.key : index,
+      ref: child.ref
+    });
+  },
+
+  renderHeader: function () {
+    var brand;
+
+    if (this.props.brand) {
+      brand = React.isValidElement(this.props.brand) ?
+        cloneWithProps(this.props.brand, {
+          className: 'navbar-brand'
+        }) : React.createElement("span", {className: "navbar-brand"}, this.props.brand);
+    }
+
+    return (
+      React.createElement("div", {className: "navbar-header"}, 
+        brand, 
+        (this.props.toggleButton || this.props.toggleNavKey != null) ? this.renderToggleButton() : null
+      )
+    );
+  },
+
+  renderToggleButton: function () {
+    var children;
+
+    if (React.isValidElement(this.props.toggleButton)) {
+      return cloneWithProps(this.props.toggleButton, {
+        className: 'navbar-toggle',
+        onClick: createChainedFunction(this.handleToggle, this.props.toggleButton.props.onClick)
+      });
+    }
+
+    children = (this.props.toggleButton != null) ?
+      this.props.toggleButton : [
+        React.createElement("span", {className: "sr-only", key: 0}, "Toggle navigation"),
+        React.createElement("span", {className: "icon-bar", key: 1}),
+        React.createElement("span", {className: "icon-bar", key: 2}),
+        React.createElement("span", {className: "icon-bar", key: 3})
+    ];
+
+    return (
+      React.createElement("button", {className: "navbar-toggle", type: "button", onClick: this.handleToggle}, 
+        children
+      )
+    );
+  }
+});
+
+module.exports = Navbar;
+
+},{"./BootstrapMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/BootstrapMixin.js","./Nav":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/Nav.js","./utils/ValidComponentChildren":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/ValidComponentChildren.js","./utils/classSet":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/classSet.js","./utils/cloneWithProps":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/cloneWithProps.js","./utils/createChainedFunction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/createChainedFunction.js","./utils/joinClasses":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/joinClasses.js","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/constants.js":[function(require,module,exports){
 module.exports = {
   CLASSES: {
     'alert': 'alert',
@@ -467,7 +917,262 @@ module.exports = {
   ]
 };
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/utils/classSet.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/Object.assign.js":[function(require,module,exports){
+/**
+ * Copyright 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This file contains an unmodified version of:
+ * https://github.com/facebook/react/blob/v0.12.0/src/vendor/stubs/Object.assign.js
+ *
+ * This source code is licensed under the BSD-style license found here:
+ * https://github.com/facebook/react/blob/v0.12.0/LICENSE
+ * An additional grant of patent rights can be found here:
+ * https://github.com/facebook/react/blob/v0.12.0/PATENTS
+ */
+
+// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.assign
+
+function assign(target, sources) {
+  if (target == null) {
+    throw new TypeError('Object.assign target cannot be null or undefined');
+  }
+
+  var to = Object(target);
+  var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+  for (var nextIndex = 1; nextIndex < arguments.length; nextIndex++) {
+    var nextSource = arguments[nextIndex];
+    if (nextSource == null) {
+      continue;
+    }
+
+    var from = Object(nextSource);
+
+    // We don't currently support accessors nor proxies. Therefore this
+    // copy cannot throw. If we ever supported this then we must handle
+    // exceptions and side-effects. We don't support symbols so they won't
+    // be transferred.
+
+    for (var key in from) {
+      if (hasOwnProperty.call(from, key)) {
+        to[key] = from[key];
+      }
+    }
+  }
+
+  return to;
+};
+
+module.exports = assign;
+
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/TransitionEvents.js":[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This file contains a modified version of:
+ * https://github.com/facebook/react/blob/v0.12.0/src/addons/transitions/ReactTransitionEvents.js
+ *
+ * This source code is licensed under the BSD-style license found here:
+ * https://github.com/facebook/react/blob/v0.12.0/LICENSE
+ * An additional grant of patent rights can be found here:
+ * https://github.com/facebook/react/blob/v0.12.0/PATENTS
+ */
+
+var canUseDOM = !!(
+  typeof window !== 'undefined' &&
+    window.document &&
+    window.document.createElement
+  );
+
+/**
+ * EVENT_NAME_MAP is used to determine which event fired when a
+ * transition/animation ends, based on the style property used to
+ * define that event.
+ */
+var EVENT_NAME_MAP = {
+  transitionend: {
+    'transition': 'transitionend',
+    'WebkitTransition': 'webkitTransitionEnd',
+    'MozTransition': 'mozTransitionEnd',
+    'OTransition': 'oTransitionEnd',
+    'msTransition': 'MSTransitionEnd'
+  },
+
+  animationend: {
+    'animation': 'animationend',
+    'WebkitAnimation': 'webkitAnimationEnd',
+    'MozAnimation': 'mozAnimationEnd',
+    'OAnimation': 'oAnimationEnd',
+    'msAnimation': 'MSAnimationEnd'
+  }
+};
+
+var endEvents = [];
+
+function detectEvents() {
+  var testEl = document.createElement('div');
+  var style = testEl.style;
+
+  // On some platforms, in particular some releases of Android 4.x,
+  // the un-prefixed "animation" and "transition" properties are defined on the
+  // style object but the events that fire will still be prefixed, so we need
+  // to check if the un-prefixed events are useable, and if not remove them
+  // from the map
+  if (!('AnimationEvent' in window)) {
+    delete EVENT_NAME_MAP.animationend.animation;
+  }
+
+  if (!('TransitionEvent' in window)) {
+    delete EVENT_NAME_MAP.transitionend.transition;
+  }
+
+  for (var baseEventName in EVENT_NAME_MAP) {
+    var baseEvents = EVENT_NAME_MAP[baseEventName];
+    for (var styleName in baseEvents) {
+      if (styleName in style) {
+        endEvents.push(baseEvents[styleName]);
+        break;
+      }
+    }
+  }
+}
+
+if (canUseDOM) {
+  detectEvents();
+}
+
+// We use the raw {add|remove}EventListener() call because EventListener
+// does not know how to remove event listeners and we really should
+// clean up. Also, these events are not triggered in older browsers
+// so we should be A-OK here.
+
+function addEventListener(node, eventName, eventListener) {
+  node.addEventListener(eventName, eventListener, false);
+}
+
+function removeEventListener(node, eventName, eventListener) {
+  node.removeEventListener(eventName, eventListener, false);
+}
+
+var ReactTransitionEvents = {
+  addEndEventListener: function(node, eventListener) {
+    if (endEvents.length === 0) {
+      // If CSS transitions are not supported, trigger an "end animation"
+      // event immediately.
+      window.setTimeout(eventListener, 0);
+      return;
+    }
+    endEvents.forEach(function(endEvent) {
+      addEventListener(node, endEvent, eventListener);
+    });
+  },
+
+  removeEndEventListener: function(node, eventListener) {
+    if (endEvents.length === 0) {
+      return;
+    }
+    endEvents.forEach(function(endEvent) {
+      removeEventListener(node, endEvent, eventListener);
+    });
+  }
+};
+
+module.exports = ReactTransitionEvents;
+
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/ValidComponentChildren.js":[function(require,module,exports){
+var React = require('react');
+
+/**
+ * Maps children that are typically specified as `props.children`,
+ * but only iterates over children that are "valid components".
+ *
+ * The mapFunction provided index will be normalised to the components mapped,
+ * so an invalid component would not increase the index.
+ *
+ * @param {?*} children Children tree container.
+ * @param {function(*, int)} mapFunction.
+ * @param {*} mapContext Context for mapFunction.
+ * @return {object} Object containing the ordered map of results.
+ */
+function mapValidComponents(children, func, context) {
+  var index = 0;
+
+  return React.Children.map(children, function (child) {
+    if (React.isValidElement(child)) {
+      var lastIndex = index;
+      index++;
+      return func.call(context, child, lastIndex);
+    }
+
+    return child;
+  });
+}
+
+/**
+ * Iterates through children that are typically specified as `props.children`,
+ * but only iterates over children that are "valid components".
+ *
+ * The provided forEachFunc(child, index) will be called for each
+ * leaf child with the index reflecting the position relative to "valid components".
+ *
+ * @param {?*} children Children tree container.
+ * @param {function(*, int)} forEachFunc.
+ * @param {*} forEachContext Context for forEachContext.
+ */
+function forEachValidComponents(children, func, context) {
+  var index = 0;
+
+  return React.Children.forEach(children, function (child) {
+    if (React.isValidElement(child)) {
+      func.call(context, child, index);
+      index++;
+    }
+  });
+}
+
+/**
+ * Count the number of "valid components" in the Children container.
+ *
+ * @param {?*} children Children tree container.
+ * @returns {number}
+ */
+function numberOfValidComponents(children) {
+  var count = 0;
+
+  React.Children.forEach(children, function (child) {
+    if (React.isValidElement(child)) { count++; }
+  });
+
+  return count;
+}
+
+/**
+ * Determine if the Child container has one or more "valid components".
+ *
+ * @param {?*} children Children tree container.
+ * @returns {boolean}
+ */
+function hasValidComponent(children) {
+  var hasValid = false;
+
+  React.Children.forEach(children, function (child) {
+    if (!hasValid && React.isValidElement(child)) {
+      hasValid = true;
+    }
+  });
+
+  return hasValid;
+}
+
+module.exports = {
+  map: mapValidComponents,
+  forEach: forEachValidComponents,
+  numberOf: numberOfValidComponents,
+  hasValidComponent: hasValidComponent
+};
+},{"react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/classSet.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -507,7 +1212,287 @@ function cx(classNames) {
 }
 
 module.exports = cx;
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/utils/joinClasses.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/cloneWithProps.js":[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This file contains modified versions of:
+ * https://github.com/facebook/react/blob/v0.12.0/src/utils/cloneWithProps.js
+ * https://github.com/facebook/react/blob/v0.12.0/src/core/ReactPropTransferer.js
+ *
+ * This source code is licensed under the BSD-style license found here:
+ * https://github.com/facebook/react/blob/v0.12.0/LICENSE
+ * An additional grant of patent rights can be found here:
+ * https://github.com/facebook/react/blob/v0.12.0/PATENTS
+ *
+ * TODO: This should be replaced as soon as cloneWithProps is available via
+ *  the core React package or a separate package.
+ *  @see https://github.com/facebook/react/issues/1906
+ */
+
+var React = require('react');
+var joinClasses = require('./joinClasses');
+var assign = require("./Object.assign");
+
+/**
+ * Creates a transfer strategy that will merge prop values using the supplied
+ * `mergeStrategy`. If a prop was previously unset, this just sets it.
+ *
+ * @param {function} mergeStrategy
+ * @return {function}
+ */
+function createTransferStrategy(mergeStrategy) {
+  return function(props, key, value) {
+    if (!props.hasOwnProperty(key)) {
+      props[key] = value;
+    } else {
+      props[key] = mergeStrategy(props[key], value);
+    }
+  };
+}
+
+var transferStrategyMerge = createTransferStrategy(function(a, b) {
+  // `merge` overrides the first object's (`props[key]` above) keys using the
+  // second object's (`value`) keys. An object's style's existing `propA` would
+  // get overridden. Flip the order here.
+  return assign({}, b, a);
+});
+
+function emptyFunction() {}
+
+/**
+ * Transfer strategies dictate how props are transferred by `transferPropsTo`.
+ * NOTE: if you add any more exceptions to this list you should be sure to
+ * update `cloneWithProps()` accordingly.
+ */
+var TransferStrategies = {
+  /**
+   * Never transfer `children`.
+   */
+  children: emptyFunction,
+  /**
+   * Transfer the `className` prop by merging them.
+   */
+  className: createTransferStrategy(joinClasses),
+  /**
+   * Transfer the `style` prop (which is an object) by merging them.
+   */
+  style: transferStrategyMerge
+};
+
+/**
+ * Mutates the first argument by transferring the properties from the second
+ * argument.
+ *
+ * @param {object} props
+ * @param {object} newProps
+ * @return {object}
+ */
+function transferInto(props, newProps) {
+  for (var thisKey in newProps) {
+    if (!newProps.hasOwnProperty(thisKey)) {
+      continue;
+    }
+
+    var transferStrategy = TransferStrategies[thisKey];
+
+    if (transferStrategy && TransferStrategies.hasOwnProperty(thisKey)) {
+      transferStrategy(props, thisKey, newProps[thisKey]);
+    } else if (!props.hasOwnProperty(thisKey)) {
+      props[thisKey] = newProps[thisKey];
+    }
+  }
+  return props;
+}
+
+/**
+ * Merge two props objects using TransferStrategies.
+ *
+ * @param {object} oldProps original props (they take precedence)
+ * @param {object} newProps new props to merge in
+ * @return {object} a new object containing both sets of props merged.
+ */
+function mergeProps(oldProps, newProps) {
+  return transferInto(assign({}, oldProps), newProps);
+}
+
+
+var ReactPropTransferer = {
+  mergeProps: mergeProps
+};
+
+var CHILDREN_PROP = 'children';
+
+/**
+ * Sometimes you want to change the props of a child passed to you. Usually
+ * this is to add a CSS class.
+ *
+ * @param {object} child child component you'd like to clone
+ * @param {object} props props you'd like to modify. They will be merged
+ * as if you used `transferPropsTo()`.
+ * @return {object} a clone of child with props merged in.
+ */
+function cloneWithProps(child, props) {
+  var newProps = ReactPropTransferer.mergeProps(props, child.props);
+
+  // Use `child.props.children` if it is provided.
+  if (!newProps.hasOwnProperty(CHILDREN_PROP) &&
+    child.props.hasOwnProperty(CHILDREN_PROP)) {
+    newProps.children = child.props.children;
+  }
+
+  if (React.version.substr(0, 4) === '0.12'){
+    var mockLegacyFactory = function(){};
+    mockLegacyFactory.isReactLegacyFactory = true;
+    mockLegacyFactory.type = child.type;
+
+    return React.createElement(mockLegacyFactory, newProps);
+  }
+
+  // The current API doesn't retain _owner and _context, which is why this
+  // doesn't use ReactElement.cloneAndReplaceProps.
+  return React.createElement(child.type, newProps);
+}
+
+module.exports = cloneWithProps;
+},{"./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/Object.assign.js","./joinClasses":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/joinClasses.js","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/createChainedFunction.js":[function(require,module,exports){
+/**
+ * Safe chained function
+ *
+ * Will only create a new function if needed,
+ * otherwise will pass back existing functions or null.
+ *
+ * @param {function} one
+ * @param {function} two
+ * @returns {function|null}
+ */
+function createChainedFunction(one, two) {
+  var hasOne = typeof one === 'function';
+  var hasTwo = typeof two === 'function';
+
+  if (!hasOne && !hasTwo) { return null; }
+  if (!hasOne) { return two; }
+  if (!hasTwo) { return one; }
+
+  return function chainedFunction() {
+    one.apply(this, arguments);
+    two.apply(this, arguments);
+  };
+}
+
+module.exports = createChainedFunction;
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/domUtils.js":[function(require,module,exports){
+
+/**
+ * Shortcut to compute element style
+ *
+ * @param {HTMLElement} elem
+ * @returns {CssStyle}
+ */
+function getComputedStyles(elem) {
+  return elem.ownerDocument.defaultView.getComputedStyle(elem, null);
+}
+
+/**
+ * Get elements offset
+ *
+ * TODO: REMOVE JQUERY!
+ *
+ * @param {HTMLElement} DOMNode
+ * @returns {{top: number, left: number}}
+ */
+function getOffset(DOMNode) {
+  if (window.jQuery) {
+    return window.jQuery(DOMNode).offset();
+  }
+
+  var docElem = document.documentElement;
+  var box = { top: 0, left: 0 };
+
+  // If we don't have gBCR, just use 0,0 rather than error
+  // BlackBerry 5, iOS 3 (original iPhone)
+  if ( typeof DOMNode.getBoundingClientRect !== 'undefined' ) {
+    box = DOMNode.getBoundingClientRect();
+  }
+
+  return {
+    top: box.top + window.pageYOffset - docElem.clientTop,
+    left: box.left + window.pageXOffset - docElem.clientLeft
+  };
+}
+
+/**
+ * Get elements position
+ *
+ * TODO: REMOVE JQUERY!
+ *
+ * @param {HTMLElement} elem
+ * @param {HTMLElement?} offsetParent
+ * @returns {{top: number, left: number}}
+ */
+function getPosition(elem, offsetParent) {
+  if (window.jQuery) {
+    return window.jQuery(elem).position();
+  }
+
+  var offset,
+      parentOffset = {top: 0, left: 0};
+
+  // Fixed elements are offset from window (parentOffset = {top:0, left: 0}, because it is its only offset parent
+  if (getComputedStyles(elem).position === 'fixed' ) {
+    // We assume that getBoundingClientRect is available when computed position is fixed
+    offset = elem.getBoundingClientRect();
+
+  } else {
+    if (!offsetParent) {
+      // Get *real* offsetParent
+      offsetParent = offsetParent(elem);
+    }
+
+    // Get correct offsets
+    offset = getOffset(elem);
+    if ( offsetParent.nodeName !== 'HTML') {
+      parentOffset = getOffset(offsetParent);
+    }
+
+    // Add offsetParent borders
+    parentOffset.top += parseInt(getComputedStyles(offsetParent).borderTopWidth, 10);
+    parentOffset.left += parseInt(getComputedStyles(offsetParent).borderLeftWidth, 10);
+  }
+
+  // Subtract parent offsets and element margins
+  return {
+    top: offset.top - parentOffset.top - parseInt(getComputedStyles(elem).marginTop, 10),
+    left: offset.left - parentOffset.left - parseInt(getComputedStyles(elem).marginLeft, 10)
+  };
+}
+
+/**
+ * Get parent element
+ *
+ * @param {HTMLElement?} elem
+ * @returns {HTMLElement}
+ */
+function offsetParent(elem) {
+  var docElem = document.documentElement;
+  var offsetParent = elem.offsetParent || docElem;
+
+  while ( offsetParent && ( offsetParent.nodeName !== 'HTML' &&
+    getComputedStyles(offsetParent).position === 'static' ) ) {
+    offsetParent = offsetParent.offsetParent;
+  }
+
+  return offsetParent || docElem;
+}
+
+module.exports = {
+  getComputedStyles: getComputedStyles,
+  getOffset: getOffset,
+  getPosition: getPosition,
+  offsetParent: offsetParent
+};
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/utils/joinClasses.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -549,7 +1534,2783 @@ function joinClasses(className/*, ... */) {
 
 module.exports = joinClasses;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/AutoFocusMixin.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Cancellation.js":[function(require,module,exports){
+"use strict";
+
+/**
+ * Represents a cancellation caused by navigating away
+ * before the previous transition has fully resolved.
+ */
+function Cancellation() {}
+
+module.exports = Cancellation;
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Configuration.js":[function(require,module,exports){
+"use strict";
+
+var warning = require("react/lib/warning");
+var invariant = require("react/lib/invariant");
+
+function checkPropTypes(componentName, propTypes, props) {
+  for (var propName in propTypes) {
+    if (propTypes.hasOwnProperty(propName)) {
+      var error = propTypes[propName](props, propName, componentName);
+
+      if (error instanceof Error) warning(false, error.message);
+    }
+  }
+}
+
+var Configuration = {
+
+  statics: {
+
+    validateProps: function validateProps(props) {
+      checkPropTypes(this.displayName, this.propTypes, props);
+    }
+
+  },
+
+  render: function render() {
+    invariant(false, "%s elements are for router configuration only and should not be rendered", this.constructor.displayName);
+  }
+
+};
+
+module.exports = Configuration;
+},{"react/lib/invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","react/lib/warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/History.js":[function(require,module,exports){
+"use strict";
+
+var invariant = require("react/lib/invariant");
+var canUseDOM = require("react/lib/ExecutionEnvironment").canUseDOM;
+
+var History = {
+
+  /**
+   * The current number of entries in the history.
+   *
+   * Note: This property is read-only.
+   */
+  length: 1,
+
+  /**
+   * Sends the browser back one entry in the history.
+   */
+  back: function back() {
+    invariant(canUseDOM, "Cannot use History.back without a DOM");
+
+    // Do this first so that History.length will
+    // be accurate in location change listeners.
+    History.length -= 1;
+
+    window.history.back();
+  }
+
+};
+
+module.exports = History;
+},{"react/lib/ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js","react/lib/invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Match.js":[function(require,module,exports){
+"use strict";
+
+var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+/* jshint -W084 */
+var PathUtils = require("./PathUtils");
+
+function deepSearch(route, pathname, query) {
+  // Check the subtree first to find the most deeply-nested match.
+  var childRoutes = route.childRoutes;
+  if (childRoutes) {
+    var match, childRoute;
+    for (var i = 0, len = childRoutes.length; i < len; ++i) {
+      childRoute = childRoutes[i];
+
+      if (childRoute.isDefault || childRoute.isNotFound) continue; // Check these in order later.
+
+      if (match = deepSearch(childRoute, pathname, query)) {
+        // A route in the subtree matched! Add this route and we're done.
+        match.routes.unshift(route);
+        return match;
+      }
+    }
+  }
+
+  // No child routes matched; try the default route.
+  var defaultRoute = route.defaultRoute;
+  if (defaultRoute && (params = PathUtils.extractParams(defaultRoute.path, pathname))) {
+    return new Match(pathname, params, query, [route, defaultRoute]);
+  } // Does the "not found" route match?
+  var notFoundRoute = route.notFoundRoute;
+  if (notFoundRoute && (params = PathUtils.extractParams(notFoundRoute.path, pathname))) {
+    return new Match(pathname, params, query, [route, notFoundRoute]);
+  } // Last attempt: check this route.
+  var params = PathUtils.extractParams(route.path, pathname);
+  if (params) {
+    return new Match(pathname, params, query, [route]);
+  }return null;
+}
+
+var Match = (function () {
+  function Match(pathname, params, query, routes) {
+    _classCallCheck(this, Match);
+
+    this.pathname = pathname;
+    this.params = params;
+    this.query = query;
+    this.routes = routes;
+  }
+
+  _prototypeProperties(Match, {
+    findMatch: {
+
+      /**
+       * Attempts to match depth-first a route in the given route's
+       * subtree against the given path and returns the match if it
+       * succeeds, null if no match can be made.
+       */
+
+      value: function findMatch(routes, path) {
+        var pathname = PathUtils.withoutQuery(path);
+        var query = PathUtils.extractQuery(path);
+        var match = null;
+
+        for (var i = 0, len = routes.length; match == null && i < len; ++i) match = deepSearch(routes[i], pathname, query);
+
+        return match;
+      },
+      writable: true,
+      configurable: true
+    }
+  });
+
+  return Match;
+})();
+
+module.exports = Match;
+},{"./PathUtils":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PathUtils.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Navigation.js":[function(require,module,exports){
+"use strict";
+
+var PropTypes = require("./PropTypes");
+
+/**
+ * A mixin for components that modify the URL.
+ *
+ * Example:
+ *
+ *   var MyLink = React.createClass({
+ *     mixins: [ Router.Navigation ],
+ *     handleClick: function (event) {
+ *       event.preventDefault();
+ *       this.transitionTo('aRoute', { the: 'params' }, { the: 'query' });
+ *     },
+ *     render: function () {
+ *       return (
+ *         <a onClick={this.handleClick}>Click me!</a>
+ *       );
+ *     }
+ *   });
+ */
+var Navigation = {
+
+  contextTypes: {
+    makePath: PropTypes.func.isRequired,
+    makeHref: PropTypes.func.isRequired,
+    transitionTo: PropTypes.func.isRequired,
+    replaceWith: PropTypes.func.isRequired,
+    goBack: PropTypes.func.isRequired
+  },
+
+  /**
+   * Returns an absolute URL path created from the given route
+   * name, URL parameters, and query values.
+   */
+  makePath: function makePath(to, params, query) {
+    return this.context.makePath(to, params, query);
+  },
+
+  /**
+   * Returns a string that may safely be used as the href of a
+   * link to the route with the given name.
+   */
+  makeHref: function makeHref(to, params, query) {
+    return this.context.makeHref(to, params, query);
+  },
+
+  /**
+   * Transitions to the URL specified in the arguments by pushing
+   * a new URL onto the history stack.
+   */
+  transitionTo: function transitionTo(to, params, query) {
+    this.context.transitionTo(to, params, query);
+  },
+
+  /**
+   * Transitions to the URL specified in the arguments by replacing
+   * the current URL in the history stack.
+   */
+  replaceWith: function replaceWith(to, params, query) {
+    this.context.replaceWith(to, params, query);
+  },
+
+  /**
+   * Transitions to the previous URL.
+   */
+  goBack: function goBack() {
+    return this.context.goBack();
+  }
+
+};
+
+module.exports = Navigation;
+},{"./PropTypes":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PropTypes.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/NavigationContext.js":[function(require,module,exports){
+"use strict";
+
+var PropTypes = require("./PropTypes");
+
+/**
+ * Provides the router with context for Router.Navigation.
+ */
+var NavigationContext = {
+
+  childContextTypes: {
+    makePath: PropTypes.func.isRequired,
+    makeHref: PropTypes.func.isRequired,
+    transitionTo: PropTypes.func.isRequired,
+    replaceWith: PropTypes.func.isRequired,
+    goBack: PropTypes.func.isRequired
+  },
+
+  getChildContext: function getChildContext() {
+    return {
+      makePath: this.constructor.makePath.bind(this.constructor),
+      makeHref: this.constructor.makeHref.bind(this.constructor),
+      transitionTo: this.constructor.transitionTo.bind(this.constructor),
+      replaceWith: this.constructor.replaceWith.bind(this.constructor),
+      goBack: this.constructor.goBack.bind(this.constructor)
+    };
+  }
+
+};
+
+module.exports = NavigationContext;
+},{"./PropTypes":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PropTypes.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PathUtils.js":[function(require,module,exports){
+"use strict";
+
+var invariant = require("react/lib/invariant");
+var merge = require("qs/lib/utils").merge;
+var qs = require("qs");
+
+var paramCompileMatcher = /:([a-zA-Z_$][a-zA-Z0-9_$]*)|[*.()\[\]\\+|{}^$]/g;
+var paramInjectMatcher = /:([a-zA-Z_$][a-zA-Z0-9_$?]*[?]?)|[*]/g;
+var paramInjectTrailingSlashMatcher = /\/\/\?|\/\?\/|\/\?/g;
+var queryMatcher = /\?(.+)/;
+
+var _compiledPatterns = {};
+
+function compilePattern(pattern) {
+  if (!(pattern in _compiledPatterns)) {
+    var paramNames = [];
+    var source = pattern.replace(paramCompileMatcher, function (match, paramName) {
+      if (paramName) {
+        paramNames.push(paramName);
+        return "([^/?#]+)";
+      } else if (match === "*") {
+        paramNames.push("splat");
+        return "(.*?)";
+      } else {
+        return "\\" + match;
+      }
+    });
+
+    _compiledPatterns[pattern] = {
+      matcher: new RegExp("^" + source + "$", "i"),
+      paramNames: paramNames
+    };
+  }
+
+  return _compiledPatterns[pattern];
+}
+
+var PathUtils = {
+
+  /**
+   * Returns true if the given path is absolute.
+   */
+  isAbsolute: function isAbsolute(path) {
+    return path.charAt(0) === "/";
+  },
+
+  /**
+   * Joins two URL paths together.
+   */
+  join: function join(a, b) {
+    return a.replace(/\/*$/, "/") + b;
+  },
+
+  /**
+   * Returns an array of the names of all parameters in the given pattern.
+   */
+  extractParamNames: function extractParamNames(pattern) {
+    return compilePattern(pattern).paramNames;
+  },
+
+  /**
+   * Extracts the portions of the given URL path that match the given pattern
+   * and returns an object of param name => value pairs. Returns null if the
+   * pattern does not match the given path.
+   */
+  extractParams: function extractParams(pattern, path) {
+    var _compilePattern = compilePattern(pattern);
+
+    var matcher = _compilePattern.matcher;
+    var paramNames = _compilePattern.paramNames;
+
+    var match = path.match(matcher);
+
+    if (!match) {
+      return null;
+    }var params = {};
+
+    paramNames.forEach(function (paramName, index) {
+      params[paramName] = match[index + 1];
+    });
+
+    return params;
+  },
+
+  /**
+   * Returns a version of the given route path with params interpolated. Throws
+   * if there is a dynamic segment of the route path for which there is no param.
+   */
+  injectParams: function injectParams(pattern, params) {
+    params = params || {};
+
+    var splatIndex = 0;
+
+    return pattern.replace(paramInjectMatcher, function (match, paramName) {
+      paramName = paramName || "splat";
+
+      // If param is optional don't check for existence
+      if (paramName.slice(-1) === "?") {
+        paramName = paramName.slice(0, -1);
+
+        if (params[paramName] == null) return "";
+      } else {
+        invariant(params[paramName] != null, "Missing \"%s\" parameter for path \"%s\"", paramName, pattern);
+      }
+
+      var segment;
+      if (paramName === "splat" && Array.isArray(params[paramName])) {
+        segment = params[paramName][splatIndex++];
+
+        invariant(segment != null, "Missing splat # %s for path \"%s\"", splatIndex, pattern);
+      } else {
+        segment = params[paramName];
+      }
+
+      return segment;
+    }).replace(paramInjectTrailingSlashMatcher, "/");
+  },
+
+  /**
+   * Returns an object that is the result of parsing any query string contained
+   * in the given path, null if the path contains no query string.
+   */
+  extractQuery: function extractQuery(path) {
+    var match = path.match(queryMatcher);
+    return match && qs.parse(match[1]);
+  },
+
+  /**
+   * Returns a version of the given path without the query string.
+   */
+  withoutQuery: function withoutQuery(path) {
+    return path.replace(queryMatcher, "");
+  },
+
+  /**
+   * Returns a version of the given path with the parameters in the given
+   * query merged into the query string.
+   */
+  withQuery: function withQuery(path, query) {
+    var existingQuery = PathUtils.extractQuery(path);
+
+    if (existingQuery) query = query ? merge(existingQuery, query) : existingQuery;
+
+    var queryString = qs.stringify(query, { indices: false });
+
+    if (queryString) {
+      return PathUtils.withoutQuery(path) + "?" + queryString;
+    }return path;
+  }
+
+};
+
+module.exports = PathUtils;
+},{"qs":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/node_modules/qs/index.js","qs/lib/utils":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/node_modules/qs/lib/utils.js","react/lib/invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PropTypes.js":[function(require,module,exports){
+"use strict";
+
+var assign = require("react/lib/Object.assign");
+var ReactPropTypes = require("react").PropTypes;
+
+var PropTypes = assign({
+
+  /**
+   * Requires that the value of a prop be falsy.
+   */
+  falsy: function falsy(props, propName, componentName) {
+    if (props[propName]) {
+      return new Error("<" + componentName + "> may not have a \"" + propName + "\" prop");
+    }
+  }
+
+}, ReactPropTypes);
+
+module.exports = PropTypes;
+},{"react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js","react/lib/Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Redirect.js":[function(require,module,exports){
+"use strict";
+
+/**
+ * Encapsulates a redirect to the given route.
+ */
+function Redirect(to, params, query) {
+  this.to = to;
+  this.params = params;
+  this.query = query;
+}
+
+module.exports = Redirect;
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Route.js":[function(require,module,exports){
+"use strict";
+
+var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+var assign = require("react/lib/Object.assign");
+var invariant = require("react/lib/invariant");
+var warning = require("react/lib/warning");
+var PathUtils = require("./PathUtils");
+
+var _currentRoute;
+
+var Route = (function () {
+  function Route(name, path, ignoreScrollBehavior, isDefault, isNotFound, onEnter, onLeave, handler) {
+    _classCallCheck(this, Route);
+
+    this.name = name;
+    this.path = path;
+    this.paramNames = PathUtils.extractParamNames(this.path);
+    this.ignoreScrollBehavior = !!ignoreScrollBehavior;
+    this.isDefault = !!isDefault;
+    this.isNotFound = !!isNotFound;
+    this.onEnter = onEnter;
+    this.onLeave = onLeave;
+    this.handler = handler;
+  }
+
+  _prototypeProperties(Route, {
+    createRoute: {
+
+      /**
+       * Creates and returns a new route. Options may be a URL pathname string
+       * with placeholders for named params or an object with any of the following
+       * properties:
+       *
+       * - name                     The name of the route. This is used to lookup a
+       *                            route relative to its parent route and should be
+       *                            unique among all child routes of the same parent
+       * - path                     A URL pathname string with optional placeholders
+       *                            that specify the names of params to extract from
+       *                            the URL when the path matches. Defaults to `/${name}`
+       *                            when there is a name given, or the path of the parent
+       *                            route, or /
+       * - ignoreScrollBehavior     True to make this route (and all descendants) ignore
+       *                            the scroll behavior of the router
+       * - isDefault                True to make this route the default route among all
+       *                            its siblings
+       * - isNotFound               True to make this route the "not found" route among
+       *                            all its siblings
+       * - onEnter                  A transition hook that will be called when the
+       *                            router is going to enter this route
+       * - onLeave                  A transition hook that will be called when the
+       *                            router is going to leave this route
+       * - handler                  A React component that will be rendered when
+       *                            this route is active
+       * - parentRoute              The parent route to use for this route. This option
+       *                            is automatically supplied when creating routes inside
+       *                            the callback to another invocation of createRoute. You
+       *                            only ever need to use this when declaring routes
+       *                            independently of one another to manually piece together
+       *                            the route hierarchy
+       *
+       * The callback may be used to structure your route hierarchy. Any call to
+       * createRoute, createDefaultRoute, createNotFoundRoute, or createRedirect
+       * inside the callback automatically uses this route as its parent.
+       */
+
+      value: function createRoute(options, callback) {
+        options = options || {};
+
+        if (typeof options === "string") options = { path: options };
+
+        var parentRoute = _currentRoute;
+
+        if (parentRoute) {
+          warning(options.parentRoute == null || options.parentRoute === parentRoute, "You should not use parentRoute with createRoute inside another route's child callback; it is ignored");
+        } else {
+          parentRoute = options.parentRoute;
+        }
+
+        var name = options.name;
+        var path = options.path || name;
+
+        if (path && !(options.isDefault || options.isNotFound)) {
+          if (PathUtils.isAbsolute(path)) {
+            if (parentRoute) {
+              invariant(parentRoute.paramNames.length === 0, "You cannot nest path \"%s\" inside \"%s\"; the parent requires URL parameters", path, parentRoute.path);
+            }
+          } else if (parentRoute) {
+            // Relative paths extend their parent.
+            path = PathUtils.join(parentRoute.path, path);
+          } else {
+            path = "/" + path;
+          }
+        } else {
+          path = parentRoute ? parentRoute.path : "/";
+        }
+
+        if (options.isNotFound && !/\*$/.test(path)) path += "*"; // Auto-append * to the path of not found routes.
+
+        var route = new Route(name, path, options.ignoreScrollBehavior, options.isDefault, options.isNotFound, options.onEnter, options.onLeave, options.handler);
+
+        if (parentRoute) {
+          if (route.isDefault) {
+            invariant(parentRoute.defaultRoute == null, "%s may not have more than one default route", parentRoute);
+
+            parentRoute.defaultRoute = route;
+          } else if (route.isNotFound) {
+            invariant(parentRoute.notFoundRoute == null, "%s may not have more than one not found route", parentRoute);
+
+            parentRoute.notFoundRoute = route;
+          }
+
+          parentRoute.appendChild(route);
+        }
+
+        // Any routes created in the callback
+        // use this route as their parent.
+        if (typeof callback === "function") {
+          var currentRoute = _currentRoute;
+          _currentRoute = route;
+          callback.call(route, route);
+          _currentRoute = currentRoute;
+        }
+
+        return route;
+      },
+      writable: true,
+      configurable: true
+    },
+    createDefaultRoute: {
+
+      /**
+       * Creates and returns a route that is rendered when its parent matches
+       * the current URL.
+       */
+
+      value: function createDefaultRoute(options) {
+        return Route.createRoute(assign({}, options, { isDefault: true }));
+      },
+      writable: true,
+      configurable: true
+    },
+    createNotFoundRoute: {
+
+      /**
+       * Creates and returns a route that is rendered when its parent matches
+       * the current URL but none of its siblings do.
+       */
+
+      value: function createNotFoundRoute(options) {
+        return Route.createRoute(assign({}, options, { isNotFound: true }));
+      },
+      writable: true,
+      configurable: true
+    },
+    createRedirect: {
+
+      /**
+       * Creates and returns a route that automatically redirects the transition
+       * to another route. In addition to the normal options to createRoute, this
+       * function accepts the following options:
+       *
+       * - from         An alias for the `path` option. Defaults to *
+       * - to           The path/route/route name to redirect to
+       * - params       The params to use in the redirect URL. Defaults
+       *                to using the current params
+       * - query        The query to use in the redirect URL. Defaults
+       *                to using the current query
+       */
+
+      value: function createRedirect(options) {
+        return Route.createRoute(assign({}, options, {
+          path: options.path || options.from || "*",
+          onEnter: function onEnter(transition, params, query) {
+            transition.redirect(options.to, options.params || params, options.query || query);
+          }
+        }));
+      },
+      writable: true,
+      configurable: true
+    }
+  }, {
+    appendChild: {
+
+      /**
+       * Appends the given route to this route's child routes.
+       */
+
+      value: function appendChild(route) {
+        invariant(route instanceof Route, "route.appendChild must use a valid Route");
+
+        if (!this.childRoutes) this.childRoutes = [];
+
+        this.childRoutes.push(route);
+      },
+      writable: true,
+      configurable: true
+    },
+    toString: {
+      value: function toString() {
+        var string = "<Route";
+
+        if (this.name) string += " name=\"" + this.name + "\"";
+
+        string += " path=\"" + this.path + "\">";
+
+        return string;
+      },
+      writable: true,
+      configurable: true
+    }
+  });
+
+  return Route;
+})();
+
+module.exports = Route;
+},{"./PathUtils":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PathUtils.js","react/lib/Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","react/lib/invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","react/lib/warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/RouteHandlerMixin.js":[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+var assign = require("react/lib/Object.assign");
+var PropTypes = require("./PropTypes");
+
+var REF_NAME = "__routeHandler__";
+
+var RouteHandlerMixin = {
+
+  contextTypes: {
+    getRouteAtDepth: PropTypes.func.isRequired,
+    setRouteComponentAtDepth: PropTypes.func.isRequired,
+    routeHandlers: PropTypes.array.isRequired
+  },
+
+  childContextTypes: {
+    routeHandlers: PropTypes.array.isRequired
+  },
+
+  getChildContext: function getChildContext() {
+    return {
+      routeHandlers: this.context.routeHandlers.concat([this])
+    };
+  },
+
+  componentDidMount: function componentDidMount() {
+    this._updateRouteComponent(this.refs[REF_NAME]);
+  },
+
+  componentDidUpdate: function componentDidUpdate() {
+    this._updateRouteComponent(this.refs[REF_NAME]);
+  },
+
+  componentWillUnmount: function componentWillUnmount() {
+    this._updateRouteComponent(null);
+  },
+
+  _updateRouteComponent: function _updateRouteComponent(component) {
+    this.context.setRouteComponentAtDepth(this.getRouteDepth(), component);
+  },
+
+  getRouteDepth: function getRouteDepth() {
+    return this.context.routeHandlers.length;
+  },
+
+  createChildRouteHandler: function createChildRouteHandler(props) {
+    var route = this.context.getRouteAtDepth(this.getRouteDepth());
+    return route ? React.createElement(route.handler, assign({}, props || this.props, { ref: REF_NAME })) : null;
+  }
+
+};
+
+module.exports = RouteHandlerMixin;
+},{"./PropTypes":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PropTypes.js","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js","react/lib/Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/ScrollHistory.js":[function(require,module,exports){
+"use strict";
+
+var invariant = require("react/lib/invariant");
+var canUseDOM = require("react/lib/ExecutionEnvironment").canUseDOM;
+var getWindowScrollPosition = require("./getWindowScrollPosition");
+
+function shouldUpdateScroll(state, prevState) {
+  if (!prevState) {
+    return true;
+  } // Don't update scroll position when only the query has changed.
+  if (state.pathname === prevState.pathname) {
+    return false;
+  }var routes = state.routes;
+  var prevRoutes = prevState.routes;
+
+  var sharedAncestorRoutes = routes.filter(function (route) {
+    return prevRoutes.indexOf(route) !== -1;
+  });
+
+  return !sharedAncestorRoutes.some(function (route) {
+    return route.ignoreScrollBehavior;
+  });
+}
+
+/**
+ * Provides the router with the ability to manage window scroll position
+ * according to its scroll behavior.
+ */
+var ScrollHistory = {
+
+  statics: {
+
+    /**
+     * Records curent scroll position as the last known position for the given URL path.
+     */
+    recordScrollPosition: function recordScrollPosition(path) {
+      if (!this.scrollHistory) this.scrollHistory = {};
+
+      this.scrollHistory[path] = getWindowScrollPosition();
+    },
+
+    /**
+     * Returns the last known scroll position for the given URL path.
+     */
+    getScrollPosition: function getScrollPosition(path) {
+      if (!this.scrollHistory) this.scrollHistory = {};
+
+      return this.scrollHistory[path] || null;
+    }
+
+  },
+
+  componentWillMount: function componentWillMount() {
+    invariant(this.constructor.getScrollBehavior() == null || canUseDOM, "Cannot use scroll behavior without a DOM");
+  },
+
+  componentDidMount: function componentDidMount() {
+    this._updateScroll();
+  },
+
+  componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+    this._updateScroll(prevState);
+  },
+
+  _updateScroll: function _updateScroll(prevState) {
+    if (!shouldUpdateScroll(this.state, prevState)) {
+      return;
+    }var scrollBehavior = this.constructor.getScrollBehavior();
+
+    if (scrollBehavior) scrollBehavior.updateScrollPosition(this.constructor.getScrollPosition(this.state.path), this.state.action);
+  }
+
+};
+
+module.exports = ScrollHistory;
+},{"./getWindowScrollPosition":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/getWindowScrollPosition.js","react/lib/ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js","react/lib/invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/State.js":[function(require,module,exports){
+"use strict";
+
+var PropTypes = require("./PropTypes");
+
+/**
+ * A mixin for components that need to know the path, routes, URL
+ * params and query that are currently active.
+ *
+ * Example:
+ *
+ *   var AboutLink = React.createClass({
+ *     mixins: [ Router.State ],
+ *     render: function () {
+ *       var className = this.props.className;
+ *   
+ *       if (this.isActive('about'))
+ *         className += ' is-active';
+ *   
+ *       return React.DOM.a({ className: className }, this.props.children);
+ *     }
+ *   });
+ */
+var State = {
+
+  contextTypes: {
+    getCurrentPath: PropTypes.func.isRequired,
+    getCurrentRoutes: PropTypes.func.isRequired,
+    getCurrentPathname: PropTypes.func.isRequired,
+    getCurrentParams: PropTypes.func.isRequired,
+    getCurrentQuery: PropTypes.func.isRequired,
+    isActive: PropTypes.func.isRequired
+  },
+
+  /**
+   * Returns the current URL path.
+   */
+  getPath: function getPath() {
+    return this.context.getCurrentPath();
+  },
+
+  /**
+   * Returns an array of the routes that are currently active.
+   */
+  getRoutes: function getRoutes() {
+    return this.context.getCurrentRoutes();
+  },
+
+  /**
+   * Returns the current URL path without the query string.
+   */
+  getPathname: function getPathname() {
+    return this.context.getCurrentPathname();
+  },
+
+  /**
+   * Returns an object of the URL params that are currently active.
+   */
+  getParams: function getParams() {
+    return this.context.getCurrentParams();
+  },
+
+  /**
+   * Returns an object of the query params that are currently active.
+   */
+  getQuery: function getQuery() {
+    return this.context.getCurrentQuery();
+  },
+
+  /**
+   * A helper method to determine if a given route, params, and query
+   * are active.
+   */
+  isActive: function isActive(to, params, query) {
+    return this.context.isActive(to, params, query);
+  }
+
+};
+
+module.exports = State;
+},{"./PropTypes":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PropTypes.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/StateContext.js":[function(require,module,exports){
+"use strict";
+
+var assign = require("react/lib/Object.assign");
+var PropTypes = require("./PropTypes");
+var PathUtils = require("./PathUtils");
+
+function routeIsActive(activeRoutes, routeName) {
+  return activeRoutes.some(function (route) {
+    return route.name === routeName;
+  });
+}
+
+function paramsAreActive(activeParams, params) {
+  for (var property in params) if (String(activeParams[property]) !== String(params[property])) {
+    return false;
+  }return true;
+}
+
+function queryIsActive(activeQuery, query) {
+  for (var property in query) if (String(activeQuery[property]) !== String(query[property])) {
+    return false;
+  }return true;
+}
+
+/**
+ * Provides the router with context for Router.State.
+ */
+var StateContext = {
+
+  /**
+   * Returns the current URL path + query string.
+   */
+  getCurrentPath: function getCurrentPath() {
+    return this.state.path;
+  },
+
+  /**
+   * Returns a read-only array of the currently active routes.
+   */
+  getCurrentRoutes: function getCurrentRoutes() {
+    return this.state.routes.slice(0);
+  },
+
+  /**
+   * Returns the current URL path without the query string.
+   */
+  getCurrentPathname: function getCurrentPathname() {
+    return this.state.pathname;
+  },
+
+  /**
+   * Returns a read-only object of the currently active URL parameters.
+   */
+  getCurrentParams: function getCurrentParams() {
+    return assign({}, this.state.params);
+  },
+
+  /**
+   * Returns a read-only object of the currently active query parameters.
+   */
+  getCurrentQuery: function getCurrentQuery() {
+    return assign({}, this.state.query);
+  },
+
+  /**
+   * Returns true if the given route, params, and query are active.
+   */
+  isActive: function isActive(to, params, query) {
+    if (PathUtils.isAbsolute(to)) {
+      return to === this.state.path;
+    }return routeIsActive(this.state.routes, to) && paramsAreActive(this.state.params, params) && (query == null || queryIsActive(this.state.query, query));
+  },
+
+  childContextTypes: {
+    getCurrentPath: PropTypes.func.isRequired,
+    getCurrentRoutes: PropTypes.func.isRequired,
+    getCurrentPathname: PropTypes.func.isRequired,
+    getCurrentParams: PropTypes.func.isRequired,
+    getCurrentQuery: PropTypes.func.isRequired,
+    isActive: PropTypes.func.isRequired
+  },
+
+  getChildContext: function getChildContext() {
+    return {
+      getCurrentPath: this.getCurrentPath,
+      getCurrentRoutes: this.getCurrentRoutes,
+      getCurrentPathname: this.getCurrentPathname,
+      getCurrentParams: this.getCurrentParams,
+      getCurrentQuery: this.getCurrentQuery,
+      isActive: this.isActive
+    };
+  }
+
+};
+
+module.exports = StateContext;
+},{"./PathUtils":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PathUtils.js","./PropTypes":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PropTypes.js","react/lib/Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Transition.js":[function(require,module,exports){
+"use strict";
+
+/* jshint -W058 */
+
+var Cancellation = require("./Cancellation");
+var Redirect = require("./Redirect");
+
+/**
+ * Encapsulates a transition to a given path.
+ *
+ * The willTransitionTo and willTransitionFrom handlers receive
+ * an instance of this class as their first argument.
+ */
+function Transition(path, retry) {
+  this.path = path;
+  this.abortReason = null;
+  // TODO: Change this to router.retryTransition(transition)
+  this.retry = retry.bind(this);
+}
+
+Transition.prototype.abort = function (reason) {
+  if (this.abortReason == null) this.abortReason = reason || "ABORT";
+};
+
+Transition.prototype.redirect = function (to, params, query) {
+  this.abort(new Redirect(to, params, query));
+};
+
+Transition.prototype.cancel = function () {
+  this.abort(new Cancellation());
+};
+
+Transition.from = function (transition, routes, components, callback) {
+  routes.reduce(function (callback, route, index) {
+    return function (error) {
+      if (error || transition.abortReason) {
+        callback(error);
+      } else if (route.onLeave) {
+        try {
+          route.onLeave(transition, components[index], callback);
+
+          // If there is no callback in the argument list, call it automatically.
+          if (route.onLeave.length < 3) callback();
+        } catch (e) {
+          callback(e);
+        }
+      } else {
+        callback();
+      }
+    };
+  }, callback)();
+};
+
+Transition.to = function (transition, routes, params, query, callback) {
+  routes.reduceRight(function (callback, route) {
+    return function (error) {
+      if (error || transition.abortReason) {
+        callback(error);
+      } else if (route.onEnter) {
+        try {
+          route.onEnter(transition, params, query, callback);
+
+          // If there is no callback in the argument list, call it automatically.
+          if (route.onEnter.length < 4) callback();
+        } catch (e) {
+          callback(e);
+        }
+      } else {
+        callback();
+      }
+    };
+  }, callback)();
+};
+
+module.exports = Transition;
+},{"./Cancellation":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Cancellation.js","./Redirect":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Redirect.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/actions/LocationActions.js":[function(require,module,exports){
+"use strict";
+
+/**
+ * Actions that modify the URL.
+ */
+var LocationActions = {
+
+  /**
+   * Indicates a new location is being pushed to the history stack.
+   */
+  PUSH: "push",
+
+  /**
+   * Indicates the current location should be replaced.
+   */
+  REPLACE: "replace",
+
+  /**
+   * Indicates the most recent entry should be removed from the history stack.
+   */
+  POP: "pop"
+
+};
+
+module.exports = LocationActions;
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/behaviors/ImitateBrowserBehavior.js":[function(require,module,exports){
+"use strict";
+
+var LocationActions = require("../actions/LocationActions");
+
+/**
+ * A scroll behavior that attempts to imitate the default behavior
+ * of modern browsers.
+ */
+var ImitateBrowserBehavior = {
+
+  updateScrollPosition: function updateScrollPosition(position, actionType) {
+    switch (actionType) {
+      case LocationActions.PUSH:
+      case LocationActions.REPLACE:
+        window.scrollTo(0, 0);
+        break;
+      case LocationActions.POP:
+        if (position) {
+          window.scrollTo(position.x, position.y);
+        } else {
+          window.scrollTo(0, 0);
+        }
+        break;
+    }
+  }
+
+};
+
+module.exports = ImitateBrowserBehavior;
+},{"../actions/LocationActions":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/actions/LocationActions.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/behaviors/ScrollToTopBehavior.js":[function(require,module,exports){
+"use strict";
+
+/**
+ * A scroll behavior that always scrolls to the top of the page
+ * after a transition.
+ */
+var ScrollToTopBehavior = {
+
+  updateScrollPosition: function updateScrollPosition() {
+    window.scrollTo(0, 0);
+  }
+
+};
+
+module.exports = ScrollToTopBehavior;
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/DefaultRoute.js":[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+var Configuration = require("../Configuration");
+var PropTypes = require("../PropTypes");
+
+/**
+ * A <DefaultRoute> component is a special kind of <Route> that
+ * renders when its parent matches but none of its siblings do.
+ * Only one such route may be used at any given level in the
+ * route hierarchy.
+ */
+var DefaultRoute = React.createClass({
+
+  displayName: "DefaultRoute",
+
+  mixins: [Configuration],
+
+  propTypes: {
+    name: PropTypes.string,
+    path: PropTypes.falsy,
+    children: PropTypes.falsy,
+    handler: PropTypes.func.isRequired
+  }
+
+});
+
+module.exports = DefaultRoute;
+},{"../Configuration":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Configuration.js","../PropTypes":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PropTypes.js","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/Link.js":[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+var classSet = require("react/lib/cx");
+var assign = require("react/lib/Object.assign");
+var Navigation = require("../Navigation");
+var State = require("../State");
+var PropTypes = require("../PropTypes");
+var Route = require("../Route");
+
+function isLeftClickEvent(event) {
+  return event.button === 0;
+}
+
+function isModifiedEvent(event) {
+  return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
+}
+
+/**
+ * <Link> components are used to create an <a> element that links to a route.
+ * When that route is active, the link gets an "active" class name (or the
+ * value of its `activeClassName` prop).
+ *
+ * For example, assuming you have the following route:
+ *
+ *   <Route name="showPost" path="/posts/:postID" handler={Post}/>
+ *
+ * You could use the following component to link to that route:
+ *
+ *   <Link to="showPost" params={{ postID: "123" }} />
+ *
+ * In addition to params, links may pass along query string parameters
+ * using the `query` prop.
+ *
+ *   <Link to="showPost" params={{ postID: "123" }} query={{ show:true }}/>
+ */
+var Link = React.createClass({
+
+  displayName: "Link",
+
+  mixins: [Navigation, State],
+
+  propTypes: {
+    activeClassName: PropTypes.string.isRequired,
+    to: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Route)]),
+    params: PropTypes.object,
+    query: PropTypes.object,
+    activeStyle: PropTypes.object,
+    onClick: PropTypes.func
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      activeClassName: "active"
+    };
+  },
+
+  handleClick: function handleClick(event) {
+    var allowTransition = true;
+    var clickResult;
+
+    if (this.props.onClick) clickResult = this.props.onClick(event);
+
+    if (isModifiedEvent(event) || !isLeftClickEvent(event)) {
+      return;
+    }if (clickResult === false || event.defaultPrevented === true) allowTransition = false;
+
+    event.preventDefault();
+
+    if (allowTransition) this.transitionTo(this.props.to, this.props.params, this.props.query);
+  },
+
+  /**
+   * Returns the value of the "href" attribute to use on the DOM element.
+   */
+  getHref: function getHref() {
+    return this.makeHref(this.props.to, this.props.params, this.props.query);
+  },
+
+  /**
+   * Returns the value of the "class" attribute to use on the DOM element, which contains
+   * the value of the activeClassName property when this <Link> is active.
+   */
+  getClassName: function getClassName() {
+    var classNames = {};
+
+    if (this.props.className) classNames[this.props.className] = true;
+
+    if (this.getActiveState()) classNames[this.props.activeClassName] = true;
+
+    return classSet(classNames);
+  },
+
+  getActiveState: function getActiveState() {
+    return this.isActive(this.props.to, this.props.params, this.props.query);
+  },
+
+  render: function render() {
+    var props = assign({}, this.props, {
+      href: this.getHref(),
+      className: this.getClassName(),
+      onClick: this.handleClick
+    });
+
+    if (props.activeStyle && this.getActiveState()) props.style = props.activeStyle;
+
+    return React.DOM.a(props, this.props.children);
+  }
+
+});
+
+module.exports = Link;
+},{"../Navigation":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Navigation.js","../PropTypes":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PropTypes.js","../Route":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Route.js","../State":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/State.js","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js","react/lib/Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","react/lib/cx":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/cx.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/NotFoundRoute.js":[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+var Configuration = require("../Configuration");
+var PropTypes = require("../PropTypes");
+
+/**
+ * A <NotFoundRoute> is a special kind of <Route> that
+ * renders when the beginning of its parent's path matches
+ * but none of its siblings do, including any <DefaultRoute>.
+ * Only one such route may be used at any given level in the
+ * route hierarchy.
+ */
+var NotFoundRoute = React.createClass({
+
+  displayName: "NotFoundRoute",
+
+  mixins: [Configuration],
+
+  propTypes: {
+    name: PropTypes.string,
+    path: PropTypes.falsy,
+    children: PropTypes.falsy,
+    handler: PropTypes.func.isRequired
+  }
+
+});
+
+module.exports = NotFoundRoute;
+},{"../Configuration":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Configuration.js","../PropTypes":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PropTypes.js","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/Redirect.js":[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+var Configuration = require("../Configuration");
+var PropTypes = require("../PropTypes");
+
+/**
+ * A <Redirect> component is a special kind of <Route> that always
+ * redirects to another route when it matches.
+ */
+var Redirect = React.createClass({
+
+  displayName: "Redirect",
+
+  mixins: [Configuration],
+
+  propTypes: {
+    path: PropTypes.string,
+    from: PropTypes.string, // Alias for path.
+    to: PropTypes.string,
+    handler: PropTypes.falsy
+  }
+
+});
+
+module.exports = Redirect;
+},{"../Configuration":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Configuration.js","../PropTypes":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PropTypes.js","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/Route.js":[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+var Configuration = require("../Configuration");
+var PropTypes = require("../PropTypes");
+var RouteHandler = require("./RouteHandler");
+/**
+ * <Route> components specify components that are rendered to the page when the
+ * URL matches a given pattern.
+ *
+ * Routes are arranged in a nested tree structure. When a new URL is requested,
+ * the tree is searched depth-first to find a route whose path matches the URL.
+ * When one is found, all routes in the tree that lead to it are considered
+ * "active" and their components are rendered into the DOM, nested in the same
+ * order as they are in the tree.
+ *
+ * The preferred way to configure a router is using JSX. The XML-like syntax is
+ * a great way to visualize how routes are laid out in an application.
+ *
+ *   var routes = [
+ *     <Route handler={App}>
+ *       <Route name="login" handler={Login}/>
+ *       <Route name="logout" handler={Logout}/>
+ *       <Route name="about" handler={About}/>
+ *     </Route>
+ *   ];
+ *   
+ *   Router.run(routes, function (Handler) {
+ *     React.render(<Handler/>, document.body);
+ *   });
+ *
+ * Handlers for Route components that contain children can render their active
+ * child route using a <RouteHandler> element.
+ *
+ *   var App = React.createClass({
+ *     render: function () {
+ *       return (
+ *         <div class="application">
+ *           <RouteHandler/>
+ *         </div>
+ *       );
+ *     }
+ *   });
+ *
+ * If no handler is provided for the route, it will render a matched child route.
+ */
+var Route = React.createClass({
+
+  displayName: "Route",
+
+  mixins: [Configuration],
+
+  propTypes: {
+    name: PropTypes.string,
+    path: PropTypes.string,
+    handler: PropTypes.func,
+    ignoreScrollBehavior: PropTypes.bool
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      handler: RouteHandler
+    };
+  }
+
+});
+
+module.exports = Route;
+},{"../Configuration":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Configuration.js","../PropTypes":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PropTypes.js","./RouteHandler":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/RouteHandler.js","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/RouteHandler.js":[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+var RouteHandlerMixin = require("../RouteHandlerMixin");
+
+/**
+ * A <RouteHandler> component renders the active child route handler
+ * when routes are nested.
+ */
+var RouteHandler = React.createClass({
+
+  displayName: "RouteHandler",
+
+  mixins: [RouteHandlerMixin],
+
+  render: function render() {
+    return this.createChildRouteHandler();
+  }
+
+});
+
+module.exports = RouteHandler;
+},{"../RouteHandlerMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/RouteHandlerMixin.js","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/createRouter.js":[function(require,module,exports){
+(function (process){
+"use strict";
+
+/* jshint -W058 */
+var React = require("react");
+var warning = require("react/lib/warning");
+var invariant = require("react/lib/invariant");
+var canUseDOM = require("react/lib/ExecutionEnvironment").canUseDOM;
+var LocationActions = require("./actions/LocationActions");
+var ImitateBrowserBehavior = require("./behaviors/ImitateBrowserBehavior");
+var HashLocation = require("./locations/HashLocation");
+var HistoryLocation = require("./locations/HistoryLocation");
+var RefreshLocation = require("./locations/RefreshLocation");
+var StaticLocation = require("./locations/StaticLocation");
+var NavigationContext = require("./NavigationContext");
+var ScrollHistory = require("./ScrollHistory");
+var StateContext = require("./StateContext");
+var createRoutesFromReactChildren = require("./createRoutesFromReactChildren");
+var isReactChildren = require("./isReactChildren");
+var Transition = require("./Transition");
+var PropTypes = require("./PropTypes");
+var Redirect = require("./Redirect");
+var History = require("./History");
+var Cancellation = require("./Cancellation");
+var Match = require("./Match");
+var Route = require("./Route");
+var supportsHistory = require("./supportsHistory");
+var PathUtils = require("./PathUtils");
+
+/**
+ * The default location for new routers.
+ */
+var DEFAULT_LOCATION = canUseDOM ? HashLocation : "/";
+
+/**
+ * The default scroll behavior for new routers.
+ */
+var DEFAULT_SCROLL_BEHAVIOR = canUseDOM ? ImitateBrowserBehavior : null;
+
+function hasProperties(object, properties) {
+  for (var propertyName in properties) if (properties.hasOwnProperty(propertyName) && object[propertyName] !== properties[propertyName]) {
+    return false;
+  }return true;
+}
+
+function hasMatch(routes, route, prevParams, nextParams, prevQuery, nextQuery) {
+  return routes.some(function (r) {
+    if (r !== route) return false;
+
+    var paramNames = route.paramNames;
+    var paramName;
+
+    // Ensure that all params the route cares about did not change.
+    for (var i = 0, len = paramNames.length; i < len; ++i) {
+      paramName = paramNames[i];
+
+      if (nextParams[paramName] !== prevParams[paramName]) return false;
+    }
+
+    // Ensure the query hasn't changed.
+    return hasProperties(prevQuery, nextQuery) && hasProperties(nextQuery, prevQuery);
+  });
+}
+
+function addRoutesToNamedRoutes(routes, namedRoutes) {
+  var route;
+  for (var i = 0, len = routes.length; i < len; ++i) {
+    route = routes[i];
+
+    if (route.name) {
+      invariant(namedRoutes[route.name] == null, "You may not have more than one route named \"%s\"", route.name);
+
+      namedRoutes[route.name] = route;
+    }
+
+    if (route.childRoutes) addRoutesToNamedRoutes(route.childRoutes, namedRoutes);
+  }
+}
+
+/**
+ * Creates and returns a new router using the given options. A router
+ * is a ReactComponent class that knows how to react to changes in the
+ * URL and keep the contents of the page in sync.
+ *
+ * Options may be any of the following:
+ *
+ * - routes           (required) The route config
+ * - location         The location to use. Defaults to HashLocation when
+ *                    the DOM is available, "/" otherwise
+ * - scrollBehavior   The scroll behavior to use. Defaults to ImitateBrowserBehavior
+ *                    when the DOM is available, null otherwise
+ * - onError          A function that is used to handle errors
+ * - onAbort          A function that is used to handle aborted transitions
+ *
+ * When rendering in a server-side environment, the location should simply
+ * be the URL path that was used in the request, including the query string.
+ */
+function createRouter(options) {
+  options = options || {};
+
+  if (isReactChildren(options)) options = { routes: options };
+
+  var mountedComponents = [];
+  var location = options.location || DEFAULT_LOCATION;
+  var scrollBehavior = options.scrollBehavior || DEFAULT_SCROLL_BEHAVIOR;
+  var state = {};
+  var nextState = {};
+  var pendingTransition = null;
+  var dispatchHandler = null;
+
+  if (typeof location === "string") location = new StaticLocation(location);
+
+  if (location instanceof StaticLocation) {
+    warning(!canUseDOM || process.env.NODE_ENV === "test", "You should not use a static location in a DOM environment because " + "the router will not be kept in sync with the current URL");
+  } else {
+    invariant(canUseDOM || location.needsDOM === false, "You cannot use %s without a DOM", location);
+  }
+
+  // Automatically fall back to full page refreshes in
+  // browsers that don't support the HTML history API.
+  if (location === HistoryLocation && !supportsHistory()) location = RefreshLocation;
+
+  var Router = React.createClass({
+
+    displayName: "Router",
+
+    statics: {
+
+      isRunning: false,
+
+      cancelPendingTransition: function cancelPendingTransition() {
+        if (pendingTransition) {
+          pendingTransition.cancel();
+          pendingTransition = null;
+        }
+      },
+
+      clearAllRoutes: function clearAllRoutes() {
+        this.cancelPendingTransition();
+        this.namedRoutes = {};
+        this.routes = [];
+      },
+
+      /**
+       * Adds routes to this router from the given children object (see ReactChildren).
+       */
+      addRoutes: function addRoutes(routes) {
+        if (isReactChildren(routes)) routes = createRoutesFromReactChildren(routes);
+
+        addRoutesToNamedRoutes(routes, this.namedRoutes);
+
+        this.routes.push.apply(this.routes, routes);
+      },
+
+      /**
+       * Replaces routes of this router from the given children object (see ReactChildren).
+       */
+      replaceRoutes: function replaceRoutes(routes) {
+        this.clearAllRoutes();
+        this.addRoutes(routes);
+        this.refresh();
+      },
+
+      /**
+       * Performs a match of the given path against this router and returns an object
+       * with the { routes, params, pathname, query } that match. Returns null if no
+       * match can be made.
+       */
+      match: function match(path) {
+        return Match.findMatch(this.routes, path);
+      },
+
+      /**
+       * Returns an absolute URL path created from the given route
+       * name, URL parameters, and query.
+       */
+      makePath: function makePath(to, params, query) {
+        var path;
+        if (PathUtils.isAbsolute(to)) {
+          path = to;
+        } else {
+          var route = to instanceof Route ? to : this.namedRoutes[to];
+
+          invariant(route instanceof Route, "Cannot find a route named \"%s\"", to);
+
+          path = route.path;
+        }
+
+        return PathUtils.withQuery(PathUtils.injectParams(path, params), query);
+      },
+
+      /**
+       * Returns a string that may safely be used as the href of a link
+       * to the route with the given name, URL parameters, and query.
+       */
+      makeHref: function makeHref(to, params, query) {
+        var path = this.makePath(to, params, query);
+        return location === HashLocation ? "#" + path : path;
+      },
+
+      /**
+       * Transitions to the URL specified in the arguments by pushing
+       * a new URL onto the history stack.
+       */
+      transitionTo: function transitionTo(to, params, query) {
+        var path = this.makePath(to, params, query);
+
+        if (pendingTransition) {
+          // Replace so pending location does not stay in history.
+          location.replace(path);
+        } else {
+          location.push(path);
+        }
+      },
+
+      /**
+       * Transitions to the URL specified in the arguments by replacing
+       * the current URL in the history stack.
+       */
+      replaceWith: function replaceWith(to, params, query) {
+        location.replace(this.makePath(to, params, query));
+      },
+
+      /**
+       * Transitions to the previous URL if one is available. Returns true if the
+       * router was able to go back, false otherwise.
+       *
+       * Note: The router only tracks history entries in your application, not the
+       * current browser session, so you can safely call this function without guarding
+       * against sending the user back to some other site. However, when using
+       * RefreshLocation (which is the fallback for HistoryLocation in browsers that
+       * don't support HTML5 history) this method will *always* send the client back
+       * because we cannot reliably track history length.
+       */
+      goBack: function goBack() {
+        if (History.length > 1 || location === RefreshLocation) {
+          location.pop();
+          return true;
+        }
+
+        warning(false, "goBack() was ignored because there is no router history");
+
+        return false;
+      },
+
+      handleAbort: options.onAbort || function (abortReason) {
+        if (location instanceof StaticLocation) throw new Error("Unhandled aborted transition! Reason: " + abortReason);
+
+        if (abortReason instanceof Cancellation) {
+          return;
+        } else if (abortReason instanceof Redirect) {
+          location.replace(this.makePath(abortReason.to, abortReason.params, abortReason.query));
+        } else {
+          location.pop();
+        }
+      },
+
+      handleError: options.onError || function (error) {
+        // Throw so we don't silently swallow async errors.
+        throw error; // This error probably originated in a transition hook.
+      },
+
+      handleLocationChange: function handleLocationChange(change) {
+        this.dispatch(change.path, change.type);
+      },
+
+      /**
+       * Performs a transition to the given path and calls callback(error, abortReason)
+       * when the transition is finished. If both arguments are null the router's state
+       * was updated. Otherwise the transition did not complete.
+       *
+       * In a transition, a router first determines which routes are involved by beginning
+       * with the current route, up the route tree to the first parent route that is shared
+       * with the destination route, and back down the tree to the destination route. The
+       * willTransitionFrom hook is invoked on all route handlers we're transitioning away
+       * from, in reverse nesting order. Likewise, the willTransitionTo hook is invoked on
+       * all route handlers we're transitioning to.
+       *
+       * Both willTransitionFrom and willTransitionTo hooks may either abort or redirect the
+       * transition. To resolve asynchronously, they may use the callback argument. If no
+       * hooks wait, the transition is fully synchronous.
+       */
+      dispatch: function dispatch(path, action) {
+        this.cancelPendingTransition();
+
+        var prevPath = state.path;
+        var isRefreshing = action == null;
+
+        if (prevPath === path && !isRefreshing) {
+          return;
+        } // Nothing to do!
+
+        // Record the scroll position as early as possible to
+        // get it before browsers try update it automatically.
+        if (prevPath && action === LocationActions.PUSH) this.recordScrollPosition(prevPath);
+
+        var match = this.match(path);
+
+        warning(match != null, "No route matches path \"%s\". Make sure you have <Route path=\"%s\"> somewhere in your routes", path, path);
+
+        if (match == null) match = {};
+
+        var prevRoutes = state.routes || [];
+        var prevParams = state.params || {};
+        var prevQuery = state.query || {};
+
+        var nextRoutes = match.routes || [];
+        var nextParams = match.params || {};
+        var nextQuery = match.query || {};
+
+        var fromRoutes, toRoutes;
+        if (prevRoutes.length) {
+          fromRoutes = prevRoutes.filter(function (route) {
+            return !hasMatch(nextRoutes, route, prevParams, nextParams, prevQuery, nextQuery);
+          });
+
+          toRoutes = nextRoutes.filter(function (route) {
+            return !hasMatch(prevRoutes, route, prevParams, nextParams, prevQuery, nextQuery);
+          });
+        } else {
+          fromRoutes = [];
+          toRoutes = nextRoutes;
+        }
+
+        var transition = new Transition(path, this.replaceWith.bind(this, path));
+        pendingTransition = transition;
+
+        var fromComponents = mountedComponents.slice(prevRoutes.length - fromRoutes.length);
+
+        Transition.from(transition, fromRoutes, fromComponents, function (error) {
+          if (error || transition.abortReason) return dispatchHandler.call(Router, error, transition); // No need to continue.
+
+          Transition.to(transition, toRoutes, nextParams, nextQuery, function (error) {
+            dispatchHandler.call(Router, error, transition, {
+              path: path,
+              action: action,
+              pathname: match.pathname,
+              routes: nextRoutes,
+              params: nextParams,
+              query: nextQuery
+            });
+          });
+        });
+      },
+
+      /**
+       * Starts this router and calls callback(router, state) when the route changes.
+       *
+       * If the router's location is static (i.e. a URL path in a server environment)
+       * the callback is called only once. Otherwise, the location should be one of the
+       * Router.*Location objects (e.g. Router.HashLocation or Router.HistoryLocation).
+       */
+      run: function run(callback) {
+        invariant(!this.isRunning, "Router is already running");
+
+        dispatchHandler = function (error, transition, newState) {
+          if (error) Router.handleError(error);
+
+          if (pendingTransition !== transition) return;
+
+          pendingTransition = null;
+
+          if (transition.abortReason) {
+            Router.handleAbort(transition.abortReason);
+          } else {
+            callback.call(this, this, nextState = newState);
+          }
+        };
+
+        if (!(location instanceof StaticLocation)) {
+          if (location.addChangeListener) location.addChangeListener(Router.handleLocationChange);
+
+          this.isRunning = true;
+        }
+
+        // Bootstrap using the current path.
+        this.refresh();
+      },
+
+      refresh: function refresh() {
+        Router.dispatch(location.getCurrentPath(), null);
+      },
+
+      stop: function stop() {
+        this.cancelPendingTransition();
+
+        if (location.removeChangeListener) location.removeChangeListener(Router.handleLocationChange);
+
+        this.isRunning = false;
+      },
+
+      getScrollBehavior: function getScrollBehavior() {
+        return scrollBehavior;
+      }
+
+    },
+
+    mixins: [NavigationContext, StateContext, ScrollHistory],
+
+    propTypes: {
+      children: PropTypes.falsy
+    },
+
+    childContextTypes: {
+      getRouteAtDepth: React.PropTypes.func.isRequired,
+      setRouteComponentAtDepth: React.PropTypes.func.isRequired,
+      routeHandlers: React.PropTypes.array.isRequired
+    },
+
+    getChildContext: function getChildContext() {
+      return {
+        getRouteAtDepth: this.getRouteAtDepth,
+        setRouteComponentAtDepth: this.setRouteComponentAtDepth,
+        routeHandlers: [this]
+      };
+    },
+
+    getInitialState: function getInitialState() {
+      return state = nextState;
+    },
+
+    componentWillReceiveProps: function componentWillReceiveProps() {
+      this.setState(state = nextState);
+    },
+
+    componentWillUnmount: function componentWillUnmount() {
+      Router.stop();
+    },
+
+    getLocation: function getLocation() {
+      return location;
+    },
+
+    getRouteAtDepth: function getRouteAtDepth(depth) {
+      var routes = this.state.routes;
+      return routes && routes[depth];
+    },
+
+    setRouteComponentAtDepth: function setRouteComponentAtDepth(depth, component) {
+      mountedComponents[depth] = component;
+    },
+
+    render: function render() {
+      var route = this.getRouteAtDepth(0);
+      return route ? React.createElement(route.handler, this.props) : null;
+    }
+
+  });
+
+  Router.clearAllRoutes();
+
+  if (options.routes) Router.addRoutes(options.routes);
+
+  return Router;
+}
+
+module.exports = createRouter;
+}).call(this,require('_process'))
+},{"./Cancellation":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Cancellation.js","./History":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/History.js","./Match":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Match.js","./NavigationContext":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/NavigationContext.js","./PathUtils":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PathUtils.js","./PropTypes":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/PropTypes.js","./Redirect":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Redirect.js","./Route":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Route.js","./ScrollHistory":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/ScrollHistory.js","./StateContext":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/StateContext.js","./Transition":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Transition.js","./actions/LocationActions":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/actions/LocationActions.js","./behaviors/ImitateBrowserBehavior":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/behaviors/ImitateBrowserBehavior.js","./createRoutesFromReactChildren":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/createRoutesFromReactChildren.js","./isReactChildren":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/isReactChildren.js","./locations/HashLocation":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/locations/HashLocation.js","./locations/HistoryLocation":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/locations/HistoryLocation.js","./locations/RefreshLocation":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/locations/RefreshLocation.js","./locations/StaticLocation":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/locations/StaticLocation.js","./supportsHistory":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/supportsHistory.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js","react/lib/ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js","react/lib/invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","react/lib/warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/createRoutesFromReactChildren.js":[function(require,module,exports){
+"use strict";
+
+/* jshint -W084 */
+
+var React = require("react");
+var assign = require("react/lib/Object.assign");
+var warning = require("react/lib/warning");
+var DefaultRouteType = require("./components/DefaultRoute").type;
+var NotFoundRouteType = require("./components/NotFoundRoute").type;
+var RedirectType = require("./components/Redirect").type;
+var Route = require("./Route");
+
+function checkPropTypes(componentName, propTypes, props) {
+  componentName = componentName || "UnknownComponent";
+
+  for (var propName in propTypes) {
+    if (propTypes.hasOwnProperty(propName)) {
+      var error = propTypes[propName](props, propName, componentName);
+
+      if (error instanceof Error) warning(false, error.message);
+    }
+  }
+}
+
+function createRouteOptions(props) {
+  var options = assign({}, props);
+  var handler = options.handler;
+
+  if (handler) {
+    options.onEnter = handler.willTransitionTo;
+    options.onLeave = handler.willTransitionFrom;
+  }
+
+  return options;
+}
+
+function createRouteFromReactElement(element) {
+  if (!React.isValidElement(element)) {
+    return;
+  }var type = element.type;
+  var props = element.props;
+
+  if (type.propTypes) checkPropTypes(type.displayName, type.propTypes, props);
+
+  if (type === DefaultRouteType) {
+    return Route.createDefaultRoute(createRouteOptions(props));
+  }if (type === NotFoundRouteType) {
+    return Route.createNotFoundRoute(createRouteOptions(props));
+  }if (type === RedirectType) {
+    return Route.createRedirect(createRouteOptions(props));
+  }return Route.createRoute(createRouteOptions(props), function () {
+    if (props.children) createRoutesFromReactChildren(props.children);
+  });
+}
+
+/**
+ * Creates and returns an array of routes created from the given
+ * ReactChildren, all of which should be one of <Route>, <DefaultRoute>,
+ * <NotFoundRoute>, or <Redirect>, e.g.:
+ *
+ *   var { createRoutesFromReactChildren, Route, Redirect } = require('react-router');
+ *
+ *   var routes = createRoutesFromReactChildren(
+ *     <Route path="/" handler={App}>
+ *       <Route name="user" path="/user/:userId" handler={User}>
+ *         <Route name="task" path="tasks/:taskId" handler={Task}/>
+ *         <Redirect from="todos/:taskId" to="task"/>
+ *       </Route>
+ *     </Route>
+ *   );
+ */
+function createRoutesFromReactChildren(children) {
+  var routes = [];
+
+  React.Children.forEach(children, function (child) {
+    if (child = createRouteFromReactElement(child)) routes.push(child);
+  });
+
+  return routes;
+}
+
+module.exports = createRoutesFromReactChildren;
+},{"./Route":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Route.js","./components/DefaultRoute":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/DefaultRoute.js","./components/NotFoundRoute":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/NotFoundRoute.js","./components/Redirect":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/Redirect.js","react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js","react/lib/Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","react/lib/warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/getWindowScrollPosition.js":[function(require,module,exports){
+"use strict";
+
+var invariant = require("react/lib/invariant");
+var canUseDOM = require("react/lib/ExecutionEnvironment").canUseDOM;
+
+/**
+ * Returns the current scroll position of the window as { x, y }.
+ */
+function getWindowScrollPosition() {
+  invariant(canUseDOM, "Cannot get current scroll position without a DOM");
+
+  return {
+    x: window.pageXOffset || document.documentElement.scrollLeft,
+    y: window.pageYOffset || document.documentElement.scrollTop
+  };
+}
+
+module.exports = getWindowScrollPosition;
+},{"react/lib/ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js","react/lib/invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/index.js":[function(require,module,exports){
+"use strict";
+
+exports.DefaultRoute = require("./components/DefaultRoute");
+exports.Link = require("./components/Link");
+exports.NotFoundRoute = require("./components/NotFoundRoute");
+exports.Redirect = require("./components/Redirect");
+exports.Route = require("./components/Route");
+exports.RouteHandler = require("./components/RouteHandler");
+
+exports.HashLocation = require("./locations/HashLocation");
+exports.HistoryLocation = require("./locations/HistoryLocation");
+exports.RefreshLocation = require("./locations/RefreshLocation");
+exports.StaticLocation = require("./locations/StaticLocation");
+
+exports.ImitateBrowserBehavior = require("./behaviors/ImitateBrowserBehavior");
+exports.ScrollToTopBehavior = require("./behaviors/ScrollToTopBehavior");
+
+exports.History = require("./History");
+exports.Navigation = require("./Navigation");
+exports.RouteHandlerMixin = require("./RouteHandlerMixin");
+exports.State = require("./State");
+
+exports.createRoute = require("./Route").createRoute;
+exports.createDefaultRoute = require("./Route").createDefaultRoute;
+exports.createNotFoundRoute = require("./Route").createNotFoundRoute;
+exports.createRedirect = require("./Route").createRedirect;
+exports.createRoutesFromReactChildren = require("./createRoutesFromReactChildren");
+exports.create = require("./createRouter");
+exports.run = require("./runRouter");
+},{"./History":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/History.js","./Navigation":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Navigation.js","./Route":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/Route.js","./RouteHandlerMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/RouteHandlerMixin.js","./State":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/State.js","./behaviors/ImitateBrowserBehavior":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/behaviors/ImitateBrowserBehavior.js","./behaviors/ScrollToTopBehavior":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/behaviors/ScrollToTopBehavior.js","./components/DefaultRoute":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/DefaultRoute.js","./components/Link":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/Link.js","./components/NotFoundRoute":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/NotFoundRoute.js","./components/Redirect":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/Redirect.js","./components/Route":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/Route.js","./components/RouteHandler":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/components/RouteHandler.js","./createRouter":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/createRouter.js","./createRoutesFromReactChildren":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/createRoutesFromReactChildren.js","./locations/HashLocation":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/locations/HashLocation.js","./locations/HistoryLocation":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/locations/HistoryLocation.js","./locations/RefreshLocation":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/locations/RefreshLocation.js","./locations/StaticLocation":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/locations/StaticLocation.js","./runRouter":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/runRouter.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/isReactChildren.js":[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+
+function isValidChild(object) {
+  return object == null || React.isValidElement(object);
+}
+
+function isReactChildren(object) {
+  return isValidChild(object) || Array.isArray(object) && object.every(isValidChild);
+}
+
+module.exports = isReactChildren;
+},{"react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/locations/HashLocation.js":[function(require,module,exports){
+"use strict";
+
+var LocationActions = require("../actions/LocationActions");
+var History = require("../History");
+
+/**
+ * Returns the current URL path from the `hash` portion of the URL, including
+ * query string.
+ */
+function getHashPath() {
+  return decodeURI(
+  // We can't use window.location.hash here because it's not
+  // consistent across browsers - Firefox will pre-decode it!
+  window.location.href.split("#")[1] || "");
+}
+
+var _actionType;
+
+function ensureSlash() {
+  var path = getHashPath();
+
+  if (path.charAt(0) === "/") {
+    return true;
+  }HashLocation.replace("/" + path);
+
+  return false;
+}
+
+var _changeListeners = [];
+
+function notifyChange(type) {
+  if (type === LocationActions.PUSH) History.length += 1;
+
+  var change = {
+    path: getHashPath(),
+    type: type
+  };
+
+  _changeListeners.forEach(function (listener) {
+    listener(change);
+  });
+}
+
+var _isListening = false;
+
+function onHashChange() {
+  if (ensureSlash()) {
+    // If we don't have an _actionType then all we know is the hash
+    // changed. It was probably caused by the user clicking the Back
+    // button, but may have also been the Forward button or manual
+    // manipulation. So just guess 'pop'.
+    notifyChange(_actionType || LocationActions.POP);
+    _actionType = null;
+  }
+}
+
+/**
+ * A Location that uses `window.location.hash`.
+ */
+var HashLocation = {
+
+  addChangeListener: function addChangeListener(listener) {
+    _changeListeners.push(listener);
+
+    // Do this BEFORE listening for hashchange.
+    ensureSlash();
+
+    if (!_isListening) {
+      if (window.addEventListener) {
+        window.addEventListener("hashchange", onHashChange, false);
+      } else {
+        window.attachEvent("onhashchange", onHashChange);
+      }
+
+      _isListening = true;
+    }
+  },
+
+  removeChangeListener: function removeChangeListener(listener) {
+    _changeListeners = _changeListeners.filter(function (l) {
+      return l !== listener;
+    });
+
+    if (_changeListeners.length === 0) {
+      if (window.removeEventListener) {
+        window.removeEventListener("hashchange", onHashChange, false);
+      } else {
+        window.removeEvent("onhashchange", onHashChange);
+      }
+
+      _isListening = false;
+    }
+  },
+
+  push: function push(path) {
+    _actionType = LocationActions.PUSH;
+    window.location.hash = path;
+  },
+
+  replace: function replace(path) {
+    _actionType = LocationActions.REPLACE;
+    window.location.replace(window.location.pathname + window.location.search + "#" + path);
+  },
+
+  pop: function pop() {
+    _actionType = LocationActions.POP;
+    History.back();
+  },
+
+  getCurrentPath: getHashPath,
+
+  toString: function toString() {
+    return "<HashLocation>";
+  }
+
+};
+
+module.exports = HashLocation;
+},{"../History":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/History.js","../actions/LocationActions":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/actions/LocationActions.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/locations/HistoryLocation.js":[function(require,module,exports){
+"use strict";
+
+var LocationActions = require("../actions/LocationActions");
+var History = require("../History");
+
+/**
+ * Returns the current URL path from `window.location`, including query string.
+ */
+function getWindowPath() {
+  return decodeURI(window.location.pathname + window.location.search);
+}
+
+var _changeListeners = [];
+
+function notifyChange(type) {
+  var change = {
+    path: getWindowPath(),
+    type: type
+  };
+
+  _changeListeners.forEach(function (listener) {
+    listener(change);
+  });
+}
+
+var _isListening = false;
+
+function onPopState(event) {
+  if (event.state === undefined) {
+    return;
+  } // Ignore extraneous popstate events in WebKit.
+
+  notifyChange(LocationActions.POP);
+}
+
+/**
+ * A Location that uses HTML5 history.
+ */
+var HistoryLocation = {
+
+  addChangeListener: function addChangeListener(listener) {
+    _changeListeners.push(listener);
+
+    if (!_isListening) {
+      if (window.addEventListener) {
+        window.addEventListener("popstate", onPopState, false);
+      } else {
+        window.attachEvent("onpopstate", onPopState);
+      }
+
+      _isListening = true;
+    }
+  },
+
+  removeChangeListener: function removeChangeListener(listener) {
+    _changeListeners = _changeListeners.filter(function (l) {
+      return l !== listener;
+    });
+
+    if (_changeListeners.length === 0) {
+      if (window.addEventListener) {
+        window.removeEventListener("popstate", onPopState, false);
+      } else {
+        window.removeEvent("onpopstate", onPopState);
+      }
+
+      _isListening = false;
+    }
+  },
+
+  push: function push(path) {
+    window.history.pushState({ path: path }, "", path);
+    History.length += 1;
+    notifyChange(LocationActions.PUSH);
+  },
+
+  replace: function replace(path) {
+    window.history.replaceState({ path: path }, "", path);
+    notifyChange(LocationActions.REPLACE);
+  },
+
+  pop: History.back,
+
+  getCurrentPath: getWindowPath,
+
+  toString: function toString() {
+    return "<HistoryLocation>";
+  }
+
+};
+
+module.exports = HistoryLocation;
+},{"../History":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/History.js","../actions/LocationActions":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/actions/LocationActions.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/locations/RefreshLocation.js":[function(require,module,exports){
+"use strict";
+
+var HistoryLocation = require("./HistoryLocation");
+var History = require("../History");
+
+/**
+ * A Location that uses full page refreshes. This is used as
+ * the fallback for HistoryLocation in browsers that do not
+ * support the HTML5 history API.
+ */
+var RefreshLocation = {
+
+  push: function push(path) {
+    window.location = path;
+  },
+
+  replace: function replace(path) {
+    window.location.replace(path);
+  },
+
+  pop: History.back,
+
+  getCurrentPath: HistoryLocation.getCurrentPath,
+
+  toString: function toString() {
+    return "<RefreshLocation>";
+  }
+
+};
+
+module.exports = RefreshLocation;
+},{"../History":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/History.js","./HistoryLocation":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/locations/HistoryLocation.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/locations/StaticLocation.js":[function(require,module,exports){
+"use strict";
+
+var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+var invariant = require("react/lib/invariant");
+
+function throwCannotModify() {
+  invariant(false, "You cannot modify a static location");
+}
+
+/**
+ * A location that only ever contains a single path. Useful in
+ * stateless environments like servers where there is no path history,
+ * only the path that was used in the request.
+ */
+
+var StaticLocation = (function () {
+  function StaticLocation(path) {
+    _classCallCheck(this, StaticLocation);
+
+    this.path = path;
+  }
+
+  _prototypeProperties(StaticLocation, null, {
+    getCurrentPath: {
+      value: function getCurrentPath() {
+        return this.path;
+      },
+      writable: true,
+      configurable: true
+    },
+    toString: {
+      value: function toString() {
+        return "<StaticLocation path=\"" + this.path + "\">";
+      },
+      writable: true,
+      configurable: true
+    }
+  });
+
+  return StaticLocation;
+})();
+
+// TODO: Include these in the above class definition
+// once we can use ES7 property initializers.
+StaticLocation.prototype.push = throwCannotModify;
+StaticLocation.prototype.replace = throwCannotModify;
+StaticLocation.prototype.pop = throwCannotModify;
+
+module.exports = StaticLocation;
+},{"react/lib/invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/runRouter.js":[function(require,module,exports){
+"use strict";
+
+var createRouter = require("./createRouter");
+
+/**
+ * A high-level convenience method that creates, configures, and
+ * runs a router in one shot. The method signature is:
+ *
+ *   Router.run(routes[, location ], callback);
+ *
+ * Using `window.location.hash` to manage the URL, you could do:
+ *
+ *   Router.run(routes, function (Handler) {
+ *     React.render(<Handler/>, document.body);
+ *   });
+ * 
+ * Using HTML5 history and a custom "cursor" prop:
+ * 
+ *   Router.run(routes, Router.HistoryLocation, function (Handler) {
+ *     React.render(<Handler cursor={cursor}/>, document.body);
+ *   });
+ *
+ * Returns the newly created router.
+ *
+ * Note: If you need to specify further options for your router such
+ * as error/abort handling or custom scroll behavior, use Router.create
+ * instead.
+ *
+ *   var router = Router.create(options);
+ *   router.run(function (Handler) {
+ *     // ...
+ *   });
+ */
+function runRouter(routes, location, callback) {
+  if (typeof location === "function") {
+    callback = location;
+    location = null;
+  }
+
+  var router = createRouter({
+    routes: routes,
+    location: location
+  });
+
+  router.run(callback);
+
+  return router;
+}
+
+module.exports = runRouter;
+},{"./createRouter":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/createRouter.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/lib/supportsHistory.js":[function(require,module,exports){
+"use strict";
+
+function supportsHistory() {
+  /*! taken from modernizr
+   * https://github.com/Modernizr/Modernizr/blob/master/LICENSE
+   * https://github.com/Modernizr/Modernizr/blob/master/feature-detects/history.js
+   * changed to avoid false negatives for Windows Phones: https://github.com/rackt/react-router/issues/586
+   */
+  var ua = navigator.userAgent;
+  if ((ua.indexOf("Android 2.") !== -1 || ua.indexOf("Android 4.0") !== -1) && ua.indexOf("Mobile Safari") !== -1 && ua.indexOf("Chrome") === -1 && ua.indexOf("Windows Phone") === -1) {
+    return false;
+  }
+  return window.history && "pushState" in window.history;
+}
+
+module.exports = supportsHistory;
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/node_modules/qs/index.js":[function(require,module,exports){
+module.exports = require('./lib/');
+
+},{"./lib/":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/node_modules/qs/lib/index.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/node_modules/qs/lib/index.js":[function(require,module,exports){
+// Load modules
+
+var Stringify = require('./stringify');
+var Parse = require('./parse');
+
+
+// Declare internals
+
+var internals = {};
+
+
+module.exports = {
+    stringify: Stringify,
+    parse: Parse
+};
+
+},{"./parse":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/node_modules/qs/lib/parse.js","./stringify":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/node_modules/qs/lib/stringify.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/node_modules/qs/lib/parse.js":[function(require,module,exports){
+// Load modules
+
+var Utils = require('./utils');
+
+
+// Declare internals
+
+var internals = {
+    delimiter: '&',
+    depth: 5,
+    arrayLimit: 20,
+    parameterLimit: 1000
+};
+
+
+internals.parseValues = function (str, options) {
+
+    var obj = {};
+    var parts = str.split(options.delimiter, options.parameterLimit === Infinity ? undefined : options.parameterLimit);
+
+    for (var i = 0, il = parts.length; i < il; ++i) {
+        var part = parts[i];
+        var pos = part.indexOf(']=') === -1 ? part.indexOf('=') : part.indexOf(']=') + 1;
+
+        if (pos === -1) {
+            obj[Utils.decode(part)] = '';
+        }
+        else {
+            var key = Utils.decode(part.slice(0, pos));
+            var val = Utils.decode(part.slice(pos + 1));
+
+            if (!obj.hasOwnProperty(key)) {
+                obj[key] = val;
+            }
+            else {
+                obj[key] = [].concat(obj[key]).concat(val);
+            }
+        }
+    }
+
+    return obj;
+};
+
+
+internals.parseObject = function (chain, val, options) {
+
+    if (!chain.length) {
+        return val;
+    }
+
+    var root = chain.shift();
+
+    var obj = {};
+    if (root === '[]') {
+        obj = [];
+        obj = obj.concat(internals.parseObject(chain, val, options));
+    }
+    else {
+        var cleanRoot = root[0] === '[' && root[root.length - 1] === ']' ? root.slice(1, root.length - 1) : root;
+        var index = parseInt(cleanRoot, 10);
+        var indexString = '' + index;
+        if (!isNaN(index) &&
+            root !== cleanRoot &&
+            indexString === cleanRoot &&
+            index >= 0 &&
+            index <= options.arrayLimit) {
+
+            obj = [];
+            obj[index] = internals.parseObject(chain, val, options);
+        }
+        else {
+            obj[cleanRoot] = internals.parseObject(chain, val, options);
+        }
+    }
+
+    return obj;
+};
+
+
+internals.parseKeys = function (key, val, options) {
+
+    if (!key) {
+        return;
+    }
+
+    // The regex chunks
+
+    var parent = /^([^\[\]]*)/;
+    var child = /(\[[^\[\]]*\])/g;
+
+    // Get the parent
+
+    var segment = parent.exec(key);
+
+    // Don't allow them to overwrite object prototype properties
+
+    if (Object.prototype.hasOwnProperty(segment[1])) {
+        return;
+    }
+
+    // Stash the parent if it exists
+
+    var keys = [];
+    if (segment[1]) {
+        keys.push(segment[1]);
+    }
+
+    // Loop through children appending to the array until we hit depth
+
+    var i = 0;
+    while ((segment = child.exec(key)) !== null && i < options.depth) {
+
+        ++i;
+        if (!Object.prototype.hasOwnProperty(segment[1].replace(/\[|\]/g, ''))) {
+            keys.push(segment[1]);
+        }
+    }
+
+    // If there's a remainder, just add whatever is left
+
+    if (segment) {
+        keys.push('[' + key.slice(segment.index) + ']');
+    }
+
+    return internals.parseObject(keys, val, options);
+};
+
+
+module.exports = function (str, options) {
+
+    if (str === '' ||
+        str === null ||
+        typeof str === 'undefined') {
+
+        return {};
+    }
+
+    options = options || {};
+    options.delimiter = typeof options.delimiter === 'string' || Utils.isRegExp(options.delimiter) ? options.delimiter : internals.delimiter;
+    options.depth = typeof options.depth === 'number' ? options.depth : internals.depth;
+    options.arrayLimit = typeof options.arrayLimit === 'number' ? options.arrayLimit : internals.arrayLimit;
+    options.parameterLimit = typeof options.parameterLimit === 'number' ? options.parameterLimit : internals.parameterLimit;
+
+    var tempObj = typeof str === 'string' ? internals.parseValues(str, options) : str;
+    var obj = {};
+
+    // Iterate over the keys and setup the new object
+
+    var keys = Object.keys(tempObj);
+    for (var i = 0, il = keys.length; i < il; ++i) {
+        var key = keys[i];
+        var newObj = internals.parseKeys(key, tempObj[key], options);
+        obj = Utils.merge(obj, newObj);
+    }
+
+    return Utils.compact(obj);
+};
+
+},{"./utils":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/node_modules/qs/lib/utils.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/node_modules/qs/lib/stringify.js":[function(require,module,exports){
+// Load modules
+
+var Utils = require('./utils');
+
+
+// Declare internals
+
+var internals = {
+    delimiter: '&',
+    indices: true
+};
+
+
+internals.stringify = function (obj, prefix, options) {
+
+    if (Utils.isBuffer(obj)) {
+        obj = obj.toString();
+    }
+    else if (obj instanceof Date) {
+        obj = obj.toISOString();
+    }
+    else if (obj === null) {
+        obj = '';
+    }
+
+    if (typeof obj === 'string' ||
+        typeof obj === 'number' ||
+        typeof obj === 'boolean') {
+
+        return [encodeURIComponent(prefix) + '=' + encodeURIComponent(obj)];
+    }
+
+    var values = [];
+
+    if (typeof obj === 'undefined') {
+        return values;
+    }
+
+    var objKeys = Object.keys(obj);
+    for (var i = 0, il = objKeys.length; i < il; ++i) {
+        var key = objKeys[i];
+        if (!options.indices &&
+            Array.isArray(obj)) {
+
+            values = values.concat(internals.stringify(obj[key], prefix, options));
+        }
+        else {
+            values = values.concat(internals.stringify(obj[key], prefix + '[' + key + ']', options));
+        }
+    }
+
+    return values;
+};
+
+
+module.exports = function (obj, options) {
+
+    options = options || {};
+    var delimiter = typeof options.delimiter === 'undefined' ? internals.delimiter : options.delimiter;
+    options.indices = typeof options.indices === 'boolean' ? options.indices : internals.indices;
+
+    var keys = [];
+
+    if (typeof obj !== 'object' ||
+        obj === null) {
+
+        return '';
+    }
+
+    var objKeys = Object.keys(obj);
+    for (var i = 0, il = objKeys.length; i < il; ++i) {
+        var key = objKeys[i];
+        keys = keys.concat(internals.stringify(obj[key], key, options));
+    }
+
+    return keys.join(delimiter);
+};
+
+},{"./utils":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/node_modules/qs/lib/utils.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-router/node_modules/qs/lib/utils.js":[function(require,module,exports){
+// Load modules
+
+
+// Declare internals
+
+var internals = {};
+
+
+exports.arrayToObject = function (source) {
+
+    var obj = {};
+    for (var i = 0, il = source.length; i < il; ++i) {
+        if (typeof source[i] !== 'undefined') {
+
+            obj[i] = source[i];
+        }
+    }
+
+    return obj;
+};
+
+
+exports.merge = function (target, source) {
+
+    if (!source) {
+        return target;
+    }
+
+    if (typeof source !== 'object') {
+        if (Array.isArray(target)) {
+            target.push(source);
+        }
+        else {
+            target[source] = true;
+        }
+
+        return target;
+    }
+
+    if (typeof target !== 'object') {
+        target = [target].concat(source);
+        return target;
+    }
+
+    if (Array.isArray(target) &&
+        !Array.isArray(source)) {
+
+        target = exports.arrayToObject(target);
+    }
+
+    var keys = Object.keys(source);
+    for (var k = 0, kl = keys.length; k < kl; ++k) {
+        var key = keys[k];
+        var value = source[key];
+
+        if (!target[key]) {
+            target[key] = value;
+        }
+        else {
+            target[key] = exports.merge(target[key], value);
+        }
+    }
+
+    return target;
+};
+
+
+exports.decode = function (str) {
+
+    try {
+        return decodeURIComponent(str.replace(/\+/g, ' '));
+    } catch (e) {
+        return str;
+    }
+};
+
+
+exports.compact = function (obj, refs) {
+
+    if (typeof obj !== 'object' ||
+        obj === null) {
+
+        return obj;
+    }
+
+    refs = refs || [];
+    var lookup = refs.indexOf(obj);
+    if (lookup !== -1) {
+        return refs[lookup];
+    }
+
+    refs.push(obj);
+
+    if (Array.isArray(obj)) {
+        var compacted = [];
+
+        for (var i = 0, il = obj.length; i < il; ++i) {
+            if (typeof obj[i] !== 'undefined') {
+                compacted.push(obj[i]);
+            }
+        }
+
+        return compacted;
+    }
+
+    var keys = Object.keys(obj);
+    for (i = 0, il = keys.length; i < il; ++i) {
+        var key = keys[i];
+        obj[key] = exports.compact(obj[key], refs);
+    }
+
+    return obj;
+};
+
+
+exports.isRegExp = function (obj) {
+    return Object.prototype.toString.call(obj) === '[object RegExp]';
+};
+
+
+exports.isBuffer = function (obj) {
+
+    if (obj === null ||
+        typeof obj === 'undefined') {
+
+        return false;
+    }
+
+    return !!(obj.constructor &&
+        obj.constructor.isBuffer &&
+        obj.constructor.isBuffer(obj));
+};
+
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/AutoFocusMixin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -576,7 +4337,7 @@ var AutoFocusMixin = {
 
 module.exports = AutoFocusMixin;
 
-},{"./focusNode":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/focusNode.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/BeforeInputEventPlugin.js":[function(require,module,exports){
+},{"./focusNode":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/focusNode.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/BeforeInputEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -798,7 +4559,7 @@ var BeforeInputEventPlugin = {
 
 module.exports = BeforeInputEventPlugin;
 
-},{"./EventConstants":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventConstants.js","./EventPropagators":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPropagators.js","./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js","./SyntheticInputEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticInputEvent.js","./keyOf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyOf.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/CSSProperty.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventConstants.js","./EventPropagators":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPropagators.js","./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js","./SyntheticInputEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticInputEvent.js","./keyOf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyOf.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/CSSProperty.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -917,7 +4678,7 @@ var CSSProperty = {
 
 module.exports = CSSProperty;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/CSSPropertyOperations.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/CSSPropertyOperations.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -1052,7 +4813,7 @@ var CSSPropertyOperations = {
 module.exports = CSSPropertyOperations;
 
 }).call(this,require('_process'))
-},{"./CSSProperty":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/CSSProperty.js","./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js","./camelizeStyleName":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/camelizeStyleName.js","./dangerousStyleValue":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/dangerousStyleValue.js","./hyphenateStyleName":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/hyphenateStyleName.js","./memoizeStringOnly":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/memoizeStringOnly.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/CallbackQueue.js":[function(require,module,exports){
+},{"./CSSProperty":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/CSSProperty.js","./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js","./camelizeStyleName":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/camelizeStyleName.js","./dangerousStyleValue":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/dangerousStyleValue.js","./hyphenateStyleName":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/hyphenateStyleName.js","./memoizeStringOnly":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/memoizeStringOnly.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/CallbackQueue.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -1152,7 +4913,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 module.exports = CallbackQueue;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/PooledClass.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ChangeEventPlugin.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/PooledClass.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ChangeEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -1534,7 +5295,7 @@ var ChangeEventPlugin = {
 
 module.exports = ChangeEventPlugin;
 
-},{"./EventConstants":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventConstants.js","./EventPluginHub":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPluginHub.js","./EventPropagators":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPropagators.js","./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js","./ReactUpdates":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactUpdates.js","./SyntheticEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticEvent.js","./isEventSupported":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/isEventSupported.js","./isTextInputElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/isTextInputElement.js","./keyOf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyOf.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ClientReactRootIndex.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventConstants.js","./EventPluginHub":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPluginHub.js","./EventPropagators":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPropagators.js","./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js","./ReactUpdates":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactUpdates.js","./SyntheticEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticEvent.js","./isEventSupported":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/isEventSupported.js","./isTextInputElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/isTextInputElement.js","./keyOf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyOf.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ClientReactRootIndex.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -1559,7 +5320,7 @@ var ClientReactRootIndex = {
 
 module.exports = ClientReactRootIndex;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/CompositionEventPlugin.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/CompositionEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -1818,7 +5579,7 @@ var CompositionEventPlugin = {
 
 module.exports = CompositionEventPlugin;
 
-},{"./EventConstants":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventConstants.js","./EventPropagators":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPropagators.js","./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js","./ReactInputSelection":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactInputSelection.js","./SyntheticCompositionEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticCompositionEvent.js","./getTextContentAccessor":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getTextContentAccessor.js","./keyOf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyOf.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMChildrenOperations.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventConstants.js","./EventPropagators":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPropagators.js","./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js","./ReactInputSelection":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactInputSelection.js","./SyntheticCompositionEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticCompositionEvent.js","./getTextContentAccessor":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getTextContentAccessor.js","./keyOf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyOf.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMChildrenOperations.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -1993,7 +5754,7 @@ var DOMChildrenOperations = {
 module.exports = DOMChildrenOperations;
 
 }).call(this,require('_process'))
-},{"./Danger":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Danger.js","./ReactMultiChildUpdateTypes":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMultiChildUpdateTypes.js","./getTextContentAccessor":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getTextContentAccessor.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMProperty.js":[function(require,module,exports){
+},{"./Danger":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Danger.js","./ReactMultiChildUpdateTypes":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMultiChildUpdateTypes.js","./getTextContentAccessor":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getTextContentAccessor.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMProperty.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -2292,7 +6053,7 @@ var DOMProperty = {
 module.exports = DOMProperty;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMPropertyOperations.js":[function(require,module,exports){
+},{"./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMPropertyOperations.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -2489,7 +6250,7 @@ var DOMPropertyOperations = {
 module.exports = DOMPropertyOperations;
 
 }).call(this,require('_process'))
-},{"./DOMProperty":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMProperty.js","./escapeTextForBrowser":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/escapeTextForBrowser.js","./memoizeStringOnly":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/memoizeStringOnly.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Danger.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMProperty.js","./escapeTextForBrowser":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/escapeTextForBrowser.js","./memoizeStringOnly":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/memoizeStringOnly.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Danger.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -2675,7 +6436,7 @@ var Danger = {
 module.exports = Danger;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js","./createNodesFromMarkup":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/createNodesFromMarkup.js","./emptyFunction":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/emptyFunction.js","./getMarkupWrap":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getMarkupWrap.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DefaultEventPluginOrder.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js","./createNodesFromMarkup":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/createNodesFromMarkup.js","./emptyFunction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/emptyFunction.js","./getMarkupWrap":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getMarkupWrap.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DefaultEventPluginOrder.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -2715,7 +6476,7 @@ var DefaultEventPluginOrder = [
 
 module.exports = DefaultEventPluginOrder;
 
-},{"./keyOf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyOf.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EnterLeaveEventPlugin.js":[function(require,module,exports){
+},{"./keyOf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyOf.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EnterLeaveEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -2855,7 +6616,7 @@ var EnterLeaveEventPlugin = {
 
 module.exports = EnterLeaveEventPlugin;
 
-},{"./EventConstants":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventConstants.js","./EventPropagators":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPropagators.js","./ReactMount":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMount.js","./SyntheticMouseEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticMouseEvent.js","./keyOf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyOf.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventConstants.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventConstants.js","./EventPropagators":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPropagators.js","./ReactMount":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMount.js","./SyntheticMouseEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticMouseEvent.js","./keyOf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyOf.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventConstants.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -2927,7 +6688,7 @@ var EventConstants = {
 
 module.exports = EventConstants;
 
-},{"./keyMirror":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyMirror.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventListener.js":[function(require,module,exports){
+},{"./keyMirror":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyMirror.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventListener.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014 Facebook, Inc.
@@ -3017,7 +6778,7 @@ var EventListener = {
 module.exports = EventListener;
 
 }).call(this,require('_process'))
-},{"./emptyFunction":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/emptyFunction.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPluginHub.js":[function(require,module,exports){
+},{"./emptyFunction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/emptyFunction.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPluginHub.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -3293,7 +7054,7 @@ var EventPluginHub = {
 module.exports = EventPluginHub;
 
 }).call(this,require('_process'))
-},{"./EventPluginRegistry":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPluginRegistry.js","./EventPluginUtils":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPluginUtils.js","./accumulateInto":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/accumulateInto.js","./forEachAccumulated":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/forEachAccumulated.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPluginRegistry.js":[function(require,module,exports){
+},{"./EventPluginRegistry":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPluginRegistry.js","./EventPluginUtils":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPluginUtils.js","./accumulateInto":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/accumulateInto.js","./forEachAccumulated":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/forEachAccumulated.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPluginRegistry.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -3573,7 +7334,7 @@ var EventPluginRegistry = {
 module.exports = EventPluginRegistry;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPluginUtils.js":[function(require,module,exports){
+},{"./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPluginUtils.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -3794,7 +7555,7 @@ var EventPluginUtils = {
 module.exports = EventPluginUtils;
 
 }).call(this,require('_process'))
-},{"./EventConstants":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventConstants.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPropagators.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventConstants.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPropagators.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -3936,7 +7697,7 @@ var EventPropagators = {
 module.exports = EventPropagators;
 
 }).call(this,require('_process'))
-},{"./EventConstants":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventConstants.js","./EventPluginHub":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPluginHub.js","./accumulateInto":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/accumulateInto.js","./forEachAccumulated":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/forEachAccumulated.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventConstants.js","./EventPluginHub":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPluginHub.js","./accumulateInto":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/accumulateInto.js","./forEachAccumulated":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/forEachAccumulated.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -3981,7 +7742,7 @@ var ExecutionEnvironment = {
 
 module.exports = ExecutionEnvironment;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/HTMLDOMPropertyConfig.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/HTMLDOMPropertyConfig.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -4173,7 +7934,7 @@ var HTMLDOMPropertyConfig = {
 
 module.exports = HTMLDOMPropertyConfig;
 
-},{"./DOMProperty":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMProperty.js","./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/LinkedValueUtils.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMProperty.js","./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/LinkedValueUtils.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -4329,7 +8090,7 @@ var LinkedValueUtils = {
 module.exports = LinkedValueUtils;
 
 }).call(this,require('_process'))
-},{"./ReactPropTypes":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPropTypes.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/LocalEventTrapMixin.js":[function(require,module,exports){
+},{"./ReactPropTypes":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPropTypes.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/LocalEventTrapMixin.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -4379,7 +8140,7 @@ var LocalEventTrapMixin = {
 module.exports = LocalEventTrapMixin;
 
 }).call(this,require('_process'))
-},{"./ReactBrowserEventEmitter":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserEventEmitter.js","./accumulateInto":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/accumulateInto.js","./forEachAccumulated":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/forEachAccumulated.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/MobileSafariClickEventPlugin.js":[function(require,module,exports){
+},{"./ReactBrowserEventEmitter":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserEventEmitter.js","./accumulateInto":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/accumulateInto.js","./forEachAccumulated":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/forEachAccumulated.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/MobileSafariClickEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -4437,7 +8198,7 @@ var MobileSafariClickEventPlugin = {
 
 module.exports = MobileSafariClickEventPlugin;
 
-},{"./EventConstants":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventConstants.js","./emptyFunction":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/emptyFunction.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventConstants.js","./emptyFunction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/emptyFunction.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js":[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -4484,7 +8245,7 @@ function assign(target, sources) {
 
 module.exports = assign;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/PooledClass.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/PooledClass.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -4600,7 +8361,7 @@ var PooledClass = {
 module.exports = PooledClass;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/React.js":[function(require,module,exports){
+},{"./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/React.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -4788,7 +8549,7 @@ React.version = '0.12.2';
 module.exports = React;
 
 }).call(this,require('_process'))
-},{"./DOMPropertyOperations":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMPropertyOperations.js","./EventPluginUtils":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPluginUtils.js","./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js","./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./ReactChildren":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactChildren.js","./ReactComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactComponent.js","./ReactCompositeComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCompositeComponent.js","./ReactContext":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactContext.js","./ReactCurrentOwner":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCurrentOwner.js","./ReactDOM":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOM.js","./ReactDOMComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMComponent.js","./ReactDefaultInjection":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDefaultInjection.js","./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElementValidator.js","./ReactInstanceHandles":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactInstanceHandles.js","./ReactLegacyElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactLegacyElement.js","./ReactMount":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMount.js","./ReactMultiChild":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMultiChild.js","./ReactPerf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPerf.js","./ReactPropTypes":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPropTypes.js","./ReactServerRendering":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactServerRendering.js","./ReactTextComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactTextComponent.js","./deprecated":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/deprecated.js","./onlyChild":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/onlyChild.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserComponentMixin.js":[function(require,module,exports){
+},{"./DOMPropertyOperations":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMPropertyOperations.js","./EventPluginUtils":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPluginUtils.js","./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js","./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./ReactChildren":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactChildren.js","./ReactComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactComponent.js","./ReactCompositeComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCompositeComponent.js","./ReactContext":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactContext.js","./ReactCurrentOwner":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCurrentOwner.js","./ReactDOM":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOM.js","./ReactDOMComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMComponent.js","./ReactDefaultInjection":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDefaultInjection.js","./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElementValidator.js","./ReactInstanceHandles":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactInstanceHandles.js","./ReactLegacyElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactLegacyElement.js","./ReactMount":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMount.js","./ReactMultiChild":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMultiChild.js","./ReactPerf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPerf.js","./ReactPropTypes":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPropTypes.js","./ReactServerRendering":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactServerRendering.js","./ReactTextComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactTextComponent.js","./deprecated":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/deprecated.js","./onlyChild":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/onlyChild.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserComponentMixin.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -4831,7 +8592,7 @@ var ReactBrowserComponentMixin = {
 module.exports = ReactBrowserComponentMixin;
 
 }).call(this,require('_process'))
-},{"./ReactEmptyComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactEmptyComponent.js","./ReactMount":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMount.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserEventEmitter.js":[function(require,module,exports){
+},{"./ReactEmptyComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactEmptyComponent.js","./ReactMount":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMount.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserEventEmitter.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -5186,7 +8947,7 @@ var ReactBrowserEventEmitter = assign({}, ReactEventEmitterMixin, {
 
 module.exports = ReactBrowserEventEmitter;
 
-},{"./EventConstants":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventConstants.js","./EventPluginHub":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPluginHub.js","./EventPluginRegistry":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPluginRegistry.js","./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./ReactEventEmitterMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactEventEmitterMixin.js","./ViewportMetrics":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ViewportMetrics.js","./isEventSupported":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/isEventSupported.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactChildren.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventConstants.js","./EventPluginHub":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPluginHub.js","./EventPluginRegistry":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPluginRegistry.js","./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./ReactEventEmitterMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactEventEmitterMixin.js","./ViewportMetrics":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ViewportMetrics.js","./isEventSupported":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/isEventSupported.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactChildren.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -5336,7 +9097,7 @@ var ReactChildren = {
 module.exports = ReactChildren;
 
 }).call(this,require('_process'))
-},{"./PooledClass":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/PooledClass.js","./traverseAllChildren":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/traverseAllChildren.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactComponent.js":[function(require,module,exports){
+},{"./PooledClass":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/PooledClass.js","./traverseAllChildren":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/traverseAllChildren.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -5779,7 +9540,7 @@ var ReactComponent = {
 module.exports = ReactComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./ReactOwner":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactOwner.js","./ReactUpdates":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactUpdates.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","./keyMirror":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyMirror.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactComponentBrowserEnvironment.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./ReactOwner":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactOwner.js","./ReactUpdates":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactUpdates.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","./keyMirror":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyMirror.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactComponentBrowserEnvironment.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -5901,7 +9662,7 @@ var ReactComponentBrowserEnvironment = {
 module.exports = ReactComponentBrowserEnvironment;
 
 }).call(this,require('_process'))
-},{"./ReactDOMIDOperations":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMIDOperations.js","./ReactMarkupChecksum":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMarkupChecksum.js","./ReactMount":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMount.js","./ReactPerf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPerf.js","./ReactReconcileTransaction":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactReconcileTransaction.js","./getReactRootElementInContainer":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getReactRootElementInContainer.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","./setInnerHTML":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/setInnerHTML.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCompositeComponent.js":[function(require,module,exports){
+},{"./ReactDOMIDOperations":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMIDOperations.js","./ReactMarkupChecksum":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMarkupChecksum.js","./ReactMount":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMount.js","./ReactPerf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPerf.js","./ReactReconcileTransaction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactReconcileTransaction.js","./getReactRootElementInContainer":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getReactRootElementInContainer.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","./setInnerHTML":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/setInnerHTML.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCompositeComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -7341,7 +11102,7 @@ var ReactCompositeComponent = {
 module.exports = ReactCompositeComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./ReactComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactComponent.js","./ReactContext":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactContext.js","./ReactCurrentOwner":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElementValidator.js","./ReactEmptyComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactEmptyComponent.js","./ReactErrorUtils":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactErrorUtils.js","./ReactLegacyElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactLegacyElement.js","./ReactOwner":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactOwner.js","./ReactPerf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPerf.js","./ReactPropTransferer":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPropTransferer.js","./ReactPropTypeLocationNames":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPropTypeLocationNames.js","./ReactPropTypeLocations":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPropTypeLocations.js","./ReactUpdates":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactUpdates.js","./instantiateReactComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/instantiateReactComponent.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","./keyMirror":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyMirror.js","./keyOf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyOf.js","./mapObject":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/mapObject.js","./monitorCodeUse":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/monitorCodeUse.js","./shouldUpdateReactComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/shouldUpdateReactComponent.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactContext.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./ReactComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactComponent.js","./ReactContext":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactContext.js","./ReactCurrentOwner":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElementValidator.js","./ReactEmptyComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactEmptyComponent.js","./ReactErrorUtils":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactErrorUtils.js","./ReactLegacyElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactLegacyElement.js","./ReactOwner":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactOwner.js","./ReactPerf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPerf.js","./ReactPropTransferer":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPropTransferer.js","./ReactPropTypeLocationNames":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPropTypeLocationNames.js","./ReactPropTypeLocations":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPropTypeLocations.js","./ReactUpdates":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactUpdates.js","./instantiateReactComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/instantiateReactComponent.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","./keyMirror":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyMirror.js","./keyOf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyOf.js","./mapObject":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/mapObject.js","./monitorCodeUse":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/monitorCodeUse.js","./shouldUpdateReactComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/shouldUpdateReactComponent.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactContext.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -7403,7 +11164,7 @@ var ReactContext = {
 
 module.exports = ReactContext;
 
-},{"./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCurrentOwner.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCurrentOwner.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -7437,7 +11198,7 @@ var ReactCurrentOwner = {
 
 module.exports = ReactCurrentOwner;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOM.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOM.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -7620,7 +11381,7 @@ var ReactDOM = mapObject({
 module.exports = ReactDOM;
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElementValidator.js","./ReactLegacyElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactLegacyElement.js","./mapObject":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/mapObject.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMButton.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElementValidator.js","./ReactLegacyElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactLegacyElement.js","./mapObject":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/mapObject.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMButton.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -7685,7 +11446,7 @@ var ReactDOMButton = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMButton;
 
-},{"./AutoFocusMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/AutoFocusMixin.js","./ReactBrowserComponentMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./keyMirror":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyMirror.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMComponent.js":[function(require,module,exports){
+},{"./AutoFocusMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/AutoFocusMixin.js","./ReactBrowserComponentMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./keyMirror":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyMirror.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -8172,7 +11933,7 @@ assign(
 module.exports = ReactDOMComponent;
 
 }).call(this,require('_process'))
-},{"./CSSPropertyOperations":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/CSSPropertyOperations.js","./DOMProperty":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMProperty.js","./DOMPropertyOperations":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMPropertyOperations.js","./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactBrowserEventEmitter":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactComponent.js","./ReactMount":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMount.js","./ReactMultiChild":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMultiChild.js","./ReactPerf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPerf.js","./escapeTextForBrowser":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/escapeTextForBrowser.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","./isEventSupported":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/isEventSupported.js","./keyOf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyOf.js","./monitorCodeUse":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/monitorCodeUse.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMForm.js":[function(require,module,exports){
+},{"./CSSPropertyOperations":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/CSSPropertyOperations.js","./DOMProperty":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMProperty.js","./DOMPropertyOperations":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMPropertyOperations.js","./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactBrowserEventEmitter":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactComponent.js","./ReactMount":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMount.js","./ReactMultiChild":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMultiChild.js","./ReactPerf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPerf.js","./escapeTextForBrowser":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/escapeTextForBrowser.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","./isEventSupported":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/isEventSupported.js","./keyOf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyOf.js","./monitorCodeUse":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/monitorCodeUse.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMForm.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -8222,7 +11983,7 @@ var ReactDOMForm = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMForm;
 
-},{"./EventConstants":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventConstants.js","./LocalEventTrapMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/LocalEventTrapMixin.js","./ReactBrowserComponentMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMIDOperations.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventConstants.js","./LocalEventTrapMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/LocalEventTrapMixin.js","./ReactBrowserComponentMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMIDOperations.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -8408,7 +12169,7 @@ var ReactDOMIDOperations = {
 module.exports = ReactDOMIDOperations;
 
 }).call(this,require('_process'))
-},{"./CSSPropertyOperations":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/CSSPropertyOperations.js","./DOMChildrenOperations":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMChildrenOperations.js","./DOMPropertyOperations":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMPropertyOperations.js","./ReactMount":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMount.js","./ReactPerf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPerf.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","./setInnerHTML":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/setInnerHTML.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMImg.js":[function(require,module,exports){
+},{"./CSSPropertyOperations":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/CSSPropertyOperations.js","./DOMChildrenOperations":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMChildrenOperations.js","./DOMPropertyOperations":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMPropertyOperations.js","./ReactMount":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMount.js","./ReactPerf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPerf.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","./setInnerHTML":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/setInnerHTML.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMImg.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -8456,7 +12217,7 @@ var ReactDOMImg = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMImg;
 
-},{"./EventConstants":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventConstants.js","./LocalEventTrapMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/LocalEventTrapMixin.js","./ReactBrowserComponentMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMInput.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventConstants.js","./LocalEventTrapMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/LocalEventTrapMixin.js","./ReactBrowserComponentMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMInput.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -8634,7 +12395,7 @@ var ReactDOMInput = ReactCompositeComponent.createClass({
 module.exports = ReactDOMInput;
 
 }).call(this,require('_process'))
-},{"./AutoFocusMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/AutoFocusMixin.js","./DOMPropertyOperations":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/LinkedValueUtils.js","./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./ReactMount":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMount.js","./ReactUpdates":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactUpdates.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMOption.js":[function(require,module,exports){
+},{"./AutoFocusMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/AutoFocusMixin.js","./DOMPropertyOperations":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/LinkedValueUtils.js","./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./ReactMount":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMount.js","./ReactUpdates":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactUpdates.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMOption.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -8687,7 +12448,7 @@ var ReactDOMOption = ReactCompositeComponent.createClass({
 module.exports = ReactDOMOption;
 
 }).call(this,require('_process'))
-},{"./ReactBrowserComponentMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMSelect.js":[function(require,module,exports){
+},{"./ReactBrowserComponentMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMSelect.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -8871,7 +12632,7 @@ var ReactDOMSelect = ReactCompositeComponent.createClass({
 
 module.exports = ReactDOMSelect;
 
-},{"./AutoFocusMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/AutoFocusMixin.js","./LinkedValueUtils":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/LinkedValueUtils.js","./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./ReactUpdates":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactUpdates.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMSelection.js":[function(require,module,exports){
+},{"./AutoFocusMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/AutoFocusMixin.js","./LinkedValueUtils":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/LinkedValueUtils.js","./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./ReactUpdates":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactUpdates.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMSelection.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -9080,7 +12841,7 @@ var ReactDOMSelection = {
 
 module.exports = ReactDOMSelection;
 
-},{"./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js","./getNodeForCharacterOffset":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getNodeForCharacterOffset.js","./getTextContentAccessor":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getTextContentAccessor.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMTextarea.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js","./getNodeForCharacterOffset":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getNodeForCharacterOffset.js","./getTextContentAccessor":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getTextContentAccessor.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMTextarea.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -9221,7 +12982,7 @@ var ReactDOMTextarea = ReactCompositeComponent.createClass({
 module.exports = ReactDOMTextarea;
 
 }).call(this,require('_process'))
-},{"./AutoFocusMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/AutoFocusMixin.js","./DOMPropertyOperations":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/LinkedValueUtils.js","./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./ReactUpdates":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactUpdates.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDefaultBatchingStrategy.js":[function(require,module,exports){
+},{"./AutoFocusMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/AutoFocusMixin.js","./DOMPropertyOperations":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/LinkedValueUtils.js","./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./ReactBrowserComponentMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactCompositeComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCompositeComponent.js","./ReactDOM":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOM.js","./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./ReactUpdates":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactUpdates.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDefaultBatchingStrategy.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -9294,7 +13055,7 @@ var ReactDefaultBatchingStrategy = {
 
 module.exports = ReactDefaultBatchingStrategy;
 
-},{"./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./ReactUpdates":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactUpdates.js","./Transaction":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Transaction.js","./emptyFunction":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/emptyFunction.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDefaultInjection.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./ReactUpdates":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactUpdates.js","./Transaction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Transaction.js","./emptyFunction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/emptyFunction.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDefaultInjection.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -9423,7 +13184,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"./BeforeInputEventPlugin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/BeforeInputEventPlugin.js","./ChangeEventPlugin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ChangeEventPlugin.js","./ClientReactRootIndex":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ClientReactRootIndex.js","./CompositionEventPlugin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/CompositionEventPlugin.js","./DefaultEventPluginOrder":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DefaultEventPluginOrder.js","./EnterLeaveEventPlugin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EnterLeaveEventPlugin.js","./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js","./HTMLDOMPropertyConfig":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/HTMLDOMPropertyConfig.js","./MobileSafariClickEventPlugin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/MobileSafariClickEventPlugin.js","./ReactBrowserComponentMixin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactComponentBrowserEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactComponentBrowserEnvironment.js","./ReactDOMButton":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMButton.js","./ReactDOMComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMComponent.js","./ReactDOMForm":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMForm.js","./ReactDOMImg":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMImg.js","./ReactDOMInput":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMInput.js","./ReactDOMOption":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMOption.js","./ReactDOMSelect":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMSelect.js","./ReactDOMTextarea":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMTextarea.js","./ReactDefaultBatchingStrategy":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDefaultBatchingStrategy.js","./ReactDefaultPerf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDefaultPerf.js","./ReactEventListener":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactEventListener.js","./ReactInjection":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactInjection.js","./ReactInstanceHandles":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactInstanceHandles.js","./ReactMount":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMount.js","./SVGDOMPropertyConfig":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SVGDOMPropertyConfig.js","./SelectEventPlugin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SelectEventPlugin.js","./ServerReactRootIndex":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ServerReactRootIndex.js","./SimpleEventPlugin":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SimpleEventPlugin.js","./createFullPageComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/createFullPageComponent.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDefaultPerf.js":[function(require,module,exports){
+},{"./BeforeInputEventPlugin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/BeforeInputEventPlugin.js","./ChangeEventPlugin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ChangeEventPlugin.js","./ClientReactRootIndex":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ClientReactRootIndex.js","./CompositionEventPlugin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/CompositionEventPlugin.js","./DefaultEventPluginOrder":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DefaultEventPluginOrder.js","./EnterLeaveEventPlugin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EnterLeaveEventPlugin.js","./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js","./HTMLDOMPropertyConfig":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/HTMLDOMPropertyConfig.js","./MobileSafariClickEventPlugin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/MobileSafariClickEventPlugin.js","./ReactBrowserComponentMixin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserComponentMixin.js","./ReactComponentBrowserEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactComponentBrowserEnvironment.js","./ReactDOMButton":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMButton.js","./ReactDOMComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMComponent.js","./ReactDOMForm":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMForm.js","./ReactDOMImg":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMImg.js","./ReactDOMInput":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMInput.js","./ReactDOMOption":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMOption.js","./ReactDOMSelect":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMSelect.js","./ReactDOMTextarea":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMTextarea.js","./ReactDefaultBatchingStrategy":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDefaultBatchingStrategy.js","./ReactDefaultPerf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDefaultPerf.js","./ReactEventListener":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactEventListener.js","./ReactInjection":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactInjection.js","./ReactInstanceHandles":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactInstanceHandles.js","./ReactMount":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMount.js","./SVGDOMPropertyConfig":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SVGDOMPropertyConfig.js","./SelectEventPlugin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SelectEventPlugin.js","./ServerReactRootIndex":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ServerReactRootIndex.js","./SimpleEventPlugin":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SimpleEventPlugin.js","./createFullPageComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/createFullPageComponent.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDefaultPerf.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -9683,7 +13444,7 @@ var ReactDefaultPerf = {
 
 module.exports = ReactDefaultPerf;
 
-},{"./DOMProperty":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMProperty.js","./ReactDefaultPerfAnalysis":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDefaultPerfAnalysis.js","./ReactMount":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMount.js","./ReactPerf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPerf.js","./performanceNow":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/performanceNow.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDefaultPerfAnalysis.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMProperty.js","./ReactDefaultPerfAnalysis":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDefaultPerfAnalysis.js","./ReactMount":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMount.js","./ReactPerf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPerf.js","./performanceNow":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/performanceNow.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDefaultPerfAnalysis.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -9889,7 +13650,7 @@ var ReactDefaultPerfAnalysis = {
 
 module.exports = ReactDefaultPerfAnalysis;
 
-},{"./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -10135,7 +13896,7 @@ ReactElement.isValidElement = function(object) {
 module.exports = ReactElement;
 
 }).call(this,require('_process'))
-},{"./ReactContext":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactContext.js","./ReactCurrentOwner":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCurrentOwner.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElementValidator.js":[function(require,module,exports){
+},{"./ReactContext":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactContext.js","./ReactCurrentOwner":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCurrentOwner.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElementValidator.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -10417,7 +14178,7 @@ var ReactElementValidator = {
 module.exports = ReactElementValidator;
 
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./ReactPropTypeLocations":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPropTypeLocations.js","./monitorCodeUse":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/monitorCodeUse.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactEmptyComponent.js":[function(require,module,exports){
+},{"./ReactCurrentOwner":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./ReactPropTypeLocations":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPropTypeLocations.js","./monitorCodeUse":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/monitorCodeUse.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactEmptyComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -10494,7 +14255,7 @@ var ReactEmptyComponent = {
 module.exports = ReactEmptyComponent;
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactErrorUtils.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactErrorUtils.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -10526,7 +14287,7 @@ var ReactErrorUtils = {
 
 module.exports = ReactErrorUtils;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactEventEmitterMixin.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactEventEmitterMixin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -10576,7 +14337,7 @@ var ReactEventEmitterMixin = {
 
 module.exports = ReactEventEmitterMixin;
 
-},{"./EventPluginHub":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPluginHub.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactEventListener.js":[function(require,module,exports){
+},{"./EventPluginHub":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPluginHub.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactEventListener.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -10760,7 +14521,7 @@ var ReactEventListener = {
 
 module.exports = ReactEventListener;
 
-},{"./EventListener":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventListener.js","./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js","./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/PooledClass.js","./ReactInstanceHandles":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactInstanceHandles.js","./ReactMount":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMount.js","./ReactUpdates":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactUpdates.js","./getEventTarget":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getEventTarget.js","./getUnboundedScrollPosition":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getUnboundedScrollPosition.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactInjection.js":[function(require,module,exports){
+},{"./EventListener":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventListener.js","./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js","./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/PooledClass.js","./ReactInstanceHandles":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactInstanceHandles.js","./ReactMount":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMount.js","./ReactUpdates":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactUpdates.js","./getEventTarget":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getEventTarget.js","./getUnboundedScrollPosition":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getUnboundedScrollPosition.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactInjection.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -10800,7 +14561,7 @@ var ReactInjection = {
 
 module.exports = ReactInjection;
 
-},{"./DOMProperty":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMProperty.js","./EventPluginHub":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPluginHub.js","./ReactBrowserEventEmitter":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactComponent.js","./ReactCompositeComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCompositeComponent.js","./ReactEmptyComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactEmptyComponent.js","./ReactNativeComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactNativeComponent.js","./ReactPerf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPerf.js","./ReactRootIndex":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactRootIndex.js","./ReactUpdates":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactUpdates.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactInputSelection.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMProperty.js","./EventPluginHub":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPluginHub.js","./ReactBrowserEventEmitter":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactComponent.js","./ReactCompositeComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCompositeComponent.js","./ReactEmptyComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactEmptyComponent.js","./ReactNativeComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactNativeComponent.js","./ReactPerf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPerf.js","./ReactRootIndex":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactRootIndex.js","./ReactUpdates":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactUpdates.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactInputSelection.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -10936,7 +14697,7 @@ var ReactInputSelection = {
 
 module.exports = ReactInputSelection;
 
-},{"./ReactDOMSelection":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactDOMSelection.js","./containsNode":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/containsNode.js","./focusNode":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/focusNode.js","./getActiveElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getActiveElement.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactInstanceHandles.js":[function(require,module,exports){
+},{"./ReactDOMSelection":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactDOMSelection.js","./containsNode":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/containsNode.js","./focusNode":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/focusNode.js","./getActiveElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getActiveElement.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactInstanceHandles.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -11271,7 +15032,7 @@ var ReactInstanceHandles = {
 module.exports = ReactInstanceHandles;
 
 }).call(this,require('_process'))
-},{"./ReactRootIndex":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactRootIndex.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactLegacyElement.js":[function(require,module,exports){
+},{"./ReactRootIndex":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactRootIndex.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactLegacyElement.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -11518,7 +15279,7 @@ ReactLegacyElementFactory._isLegacyCallWarningEnabled = true;
 module.exports = ReactLegacyElementFactory;
 
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCurrentOwner.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","./monitorCodeUse":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/monitorCodeUse.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMarkupChecksum.js":[function(require,module,exports){
+},{"./ReactCurrentOwner":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCurrentOwner.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","./monitorCodeUse":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/monitorCodeUse.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMarkupChecksum.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -11566,7 +15327,7 @@ var ReactMarkupChecksum = {
 
 module.exports = ReactMarkupChecksum;
 
-},{"./adler32":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/adler32.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMount.js":[function(require,module,exports){
+},{"./adler32":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/adler32.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMount.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -12264,7 +16025,7 @@ ReactMount.renderComponent = deprecated(
 module.exports = ReactMount;
 
 }).call(this,require('_process'))
-},{"./DOMProperty":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMProperty.js","./ReactBrowserEventEmitter":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactCurrentOwner":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./ReactInstanceHandles":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactInstanceHandles.js","./ReactLegacyElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactLegacyElement.js","./ReactPerf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPerf.js","./containsNode":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/containsNode.js","./deprecated":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/deprecated.js","./getReactRootElementInContainer":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getReactRootElementInContainer.js","./instantiateReactComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/instantiateReactComponent.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","./shouldUpdateReactComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/shouldUpdateReactComponent.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMultiChild.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMProperty.js","./ReactBrowserEventEmitter":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactCurrentOwner":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./ReactInstanceHandles":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactInstanceHandles.js","./ReactLegacyElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactLegacyElement.js","./ReactPerf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPerf.js","./containsNode":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/containsNode.js","./deprecated":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/deprecated.js","./getReactRootElementInContainer":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getReactRootElementInContainer.js","./instantiateReactComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/instantiateReactComponent.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","./shouldUpdateReactComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/shouldUpdateReactComponent.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMultiChild.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -12692,7 +16453,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 
-},{"./ReactComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactComponent.js","./ReactMultiChildUpdateTypes":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMultiChildUpdateTypes.js","./flattenChildren":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/flattenChildren.js","./instantiateReactComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/instantiateReactComponent.js","./shouldUpdateReactComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/shouldUpdateReactComponent.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMultiChildUpdateTypes.js":[function(require,module,exports){
+},{"./ReactComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactComponent.js","./ReactMultiChildUpdateTypes":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMultiChildUpdateTypes.js","./flattenChildren":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/flattenChildren.js","./instantiateReactComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/instantiateReactComponent.js","./shouldUpdateReactComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/shouldUpdateReactComponent.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMultiChildUpdateTypes.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -12725,7 +16486,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 
 module.exports = ReactMultiChildUpdateTypes;
 
-},{"./keyMirror":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyMirror.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactNativeComponent.js":[function(require,module,exports){
+},{"./keyMirror":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyMirror.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactNativeComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -12798,7 +16559,7 @@ var ReactNativeComponent = {
 module.exports = ReactNativeComponent;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactOwner.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactOwner.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -12954,7 +16715,7 @@ var ReactOwner = {
 module.exports = ReactOwner;
 
 }).call(this,require('_process'))
-},{"./emptyObject":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/emptyObject.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPerf.js":[function(require,module,exports){
+},{"./emptyObject":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/emptyObject.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPerf.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -13038,7 +16799,7 @@ function _noMeasure(objName, fnName, func) {
 module.exports = ReactPerf;
 
 }).call(this,require('_process'))
-},{"_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPropTransferer.js":[function(require,module,exports){
+},{"_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPropTransferer.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -13205,7 +16966,7 @@ var ReactPropTransferer = {
 module.exports = ReactPropTransferer;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./emptyFunction":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/emptyFunction.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","./joinClasses":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/joinClasses.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./emptyFunction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/emptyFunction.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","./joinClasses":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/joinClasses.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -13233,7 +16994,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = ReactPropTypeLocationNames;
 
 }).call(this,require('_process'))
-},{"_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPropTypeLocations.js":[function(require,module,exports){
+},{"_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPropTypeLocations.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -13257,7 +17018,7 @@ var ReactPropTypeLocations = keyMirror({
 
 module.exports = ReactPropTypeLocations;
 
-},{"./keyMirror":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyMirror.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPropTypes.js":[function(require,module,exports){
+},{"./keyMirror":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyMirror.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPropTypes.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -13611,7 +17372,7 @@ function getPreciseType(propValue) {
 
 module.exports = ReactPropTypes;
 
-},{"./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./ReactPropTypeLocationNames":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPropTypeLocationNames.js","./deprecated":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/deprecated.js","./emptyFunction":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/emptyFunction.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPutListenerQueue.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./ReactPropTypeLocationNames":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPropTypeLocationNames.js","./deprecated":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/deprecated.js","./emptyFunction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/emptyFunction.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPutListenerQueue.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -13667,7 +17428,7 @@ PooledClass.addPoolingTo(ReactPutListenerQueue);
 
 module.exports = ReactPutListenerQueue;
 
-},{"./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/PooledClass.js","./ReactBrowserEventEmitter":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserEventEmitter.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactReconcileTransaction.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/PooledClass.js","./ReactBrowserEventEmitter":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserEventEmitter.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactReconcileTransaction.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -13843,7 +17604,7 @@ PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
 
-},{"./CallbackQueue":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/CallbackQueue.js","./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/PooledClass.js","./ReactBrowserEventEmitter":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactInputSelection":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactInputSelection.js","./ReactPutListenerQueue":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPutListenerQueue.js","./Transaction":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Transaction.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactRootIndex.js":[function(require,module,exports){
+},{"./CallbackQueue":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/CallbackQueue.js","./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/PooledClass.js","./ReactBrowserEventEmitter":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactBrowserEventEmitter.js","./ReactInputSelection":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactInputSelection.js","./ReactPutListenerQueue":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPutListenerQueue.js","./Transaction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Transaction.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactRootIndex.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -13874,7 +17635,7 @@ var ReactRootIndex = {
 
 module.exports = ReactRootIndex;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactServerRendering.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactServerRendering.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -13954,7 +17715,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./ReactInstanceHandles":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactInstanceHandles.js","./ReactMarkupChecksum":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactMarkupChecksum.js","./ReactServerRenderingTransaction":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactServerRenderingTransaction.js","./instantiateReactComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/instantiateReactComponent.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactServerRenderingTransaction.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./ReactInstanceHandles":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactInstanceHandles.js","./ReactMarkupChecksum":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactMarkupChecksum.js","./ReactServerRenderingTransaction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactServerRenderingTransaction.js","./instantiateReactComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/instantiateReactComponent.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactServerRenderingTransaction.js":[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -14067,7 +17828,7 @@ PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
 
-},{"./CallbackQueue":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/CallbackQueue.js","./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/PooledClass.js","./ReactPutListenerQueue":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPutListenerQueue.js","./Transaction":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Transaction.js","./emptyFunction":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/emptyFunction.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactTextComponent.js":[function(require,module,exports){
+},{"./CallbackQueue":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/CallbackQueue.js","./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/PooledClass.js","./ReactPutListenerQueue":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPutListenerQueue.js","./Transaction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Transaction.js","./emptyFunction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/emptyFunction.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactTextComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -14173,7 +17934,7 @@ ReactTextComponentFactory.type = ReactTextComponent;
 
 module.exports = ReactTextComponentFactory;
 
-},{"./DOMPropertyOperations":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMPropertyOperations.js","./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./ReactComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactComponent.js","./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./escapeTextForBrowser":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/escapeTextForBrowser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactUpdates.js":[function(require,module,exports){
+},{"./DOMPropertyOperations":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMPropertyOperations.js","./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./ReactComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactComponent.js","./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./escapeTextForBrowser":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/escapeTextForBrowser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactUpdates.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -14463,7 +18224,7 @@ var ReactUpdates = {
 module.exports = ReactUpdates;
 
 }).call(this,require('_process'))
-},{"./CallbackQueue":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/CallbackQueue.js","./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/PooledClass.js","./ReactCurrentOwner":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCurrentOwner.js","./ReactPerf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactPerf.js","./Transaction":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Transaction.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SVGDOMPropertyConfig.js":[function(require,module,exports){
+},{"./CallbackQueue":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/CallbackQueue.js","./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/PooledClass.js","./ReactCurrentOwner":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCurrentOwner.js","./ReactPerf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactPerf.js","./Transaction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Transaction.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SVGDOMPropertyConfig.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -14555,7 +18316,7 @@ var SVGDOMPropertyConfig = {
 
 module.exports = SVGDOMPropertyConfig;
 
-},{"./DOMProperty":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/DOMProperty.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SelectEventPlugin.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/DOMProperty.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SelectEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -14750,7 +18511,7 @@ var SelectEventPlugin = {
 
 module.exports = SelectEventPlugin;
 
-},{"./EventConstants":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventConstants.js","./EventPropagators":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPropagators.js","./ReactInputSelection":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactInputSelection.js","./SyntheticEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticEvent.js","./getActiveElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getActiveElement.js","./isTextInputElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/isTextInputElement.js","./keyOf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyOf.js","./shallowEqual":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/shallowEqual.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ServerReactRootIndex.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventConstants.js","./EventPropagators":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPropagators.js","./ReactInputSelection":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactInputSelection.js","./SyntheticEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticEvent.js","./getActiveElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getActiveElement.js","./isTextInputElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/isTextInputElement.js","./keyOf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyOf.js","./shallowEqual":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/shallowEqual.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ServerReactRootIndex.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -14781,7 +18542,7 @@ var ServerReactRootIndex = {
 
 module.exports = ServerReactRootIndex;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SimpleEventPlugin.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SimpleEventPlugin.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -15209,7 +18970,7 @@ var SimpleEventPlugin = {
 module.exports = SimpleEventPlugin;
 
 }).call(this,require('_process'))
-},{"./EventConstants":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventConstants.js","./EventPluginUtils":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPluginUtils.js","./EventPropagators":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/EventPropagators.js","./SyntheticClipboardEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticClipboardEvent.js","./SyntheticDragEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticDragEvent.js","./SyntheticEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticEvent.js","./SyntheticFocusEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticFocusEvent.js","./SyntheticKeyboardEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticKeyboardEvent.js","./SyntheticMouseEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticMouseEvent.js","./SyntheticTouchEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticTouchEvent.js","./SyntheticUIEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticUIEvent.js","./SyntheticWheelEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticWheelEvent.js","./getEventCharCode":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getEventCharCode.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","./keyOf":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyOf.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticClipboardEvent.js":[function(require,module,exports){
+},{"./EventConstants":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventConstants.js","./EventPluginUtils":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPluginUtils.js","./EventPropagators":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/EventPropagators.js","./SyntheticClipboardEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticClipboardEvent.js","./SyntheticDragEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticDragEvent.js","./SyntheticEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticEvent.js","./SyntheticFocusEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticFocusEvent.js","./SyntheticKeyboardEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticKeyboardEvent.js","./SyntheticMouseEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticMouseEvent.js","./SyntheticTouchEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticTouchEvent.js","./SyntheticUIEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticUIEvent.js","./SyntheticWheelEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticWheelEvent.js","./getEventCharCode":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getEventCharCode.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","./keyOf":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyOf.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticClipboardEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -15255,7 +19016,7 @@ SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 module.exports = SyntheticClipboardEvent;
 
 
-},{"./SyntheticEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticEvent.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticCompositionEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticEvent.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticCompositionEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -15301,7 +19062,7 @@ SyntheticEvent.augmentClass(
 module.exports = SyntheticCompositionEvent;
 
 
-},{"./SyntheticEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticEvent.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticDragEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticEvent.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticDragEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -15340,7 +19101,7 @@ SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
 
-},{"./SyntheticMouseEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticMouseEvent.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticEvent.js":[function(require,module,exports){
+},{"./SyntheticMouseEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticMouseEvent.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -15498,7 +19259,7 @@ PooledClass.addPoolingTo(SyntheticEvent, PooledClass.threeArgumentPooler);
 
 module.exports = SyntheticEvent;
 
-},{"./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/PooledClass.js","./emptyFunction":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/emptyFunction.js","./getEventTarget":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getEventTarget.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticFocusEvent.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./PooledClass":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/PooledClass.js","./emptyFunction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/emptyFunction.js","./getEventTarget":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getEventTarget.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticFocusEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -15537,7 +19298,7 @@ SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
 
-},{"./SyntheticUIEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticUIEvent.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticInputEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticUIEvent.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticInputEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -15584,7 +19345,7 @@ SyntheticEvent.augmentClass(
 module.exports = SyntheticInputEvent;
 
 
-},{"./SyntheticEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticEvent.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticKeyboardEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticEvent.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticKeyboardEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -15671,7 +19432,7 @@ SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
 
-},{"./SyntheticUIEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticUIEvent.js","./getEventCharCode":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getEventCharCode.js","./getEventKey":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getEventKey.js","./getEventModifierState":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getEventModifierState.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticMouseEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticUIEvent.js","./getEventCharCode":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getEventCharCode.js","./getEventKey":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getEventKey.js","./getEventModifierState":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getEventModifierState.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticMouseEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -15754,7 +19515,7 @@ SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
 
-},{"./SyntheticUIEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticUIEvent.js","./ViewportMetrics":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ViewportMetrics.js","./getEventModifierState":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getEventModifierState.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticTouchEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticUIEvent.js","./ViewportMetrics":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ViewportMetrics.js","./getEventModifierState":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getEventModifierState.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticTouchEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -15802,7 +19563,7 @@ SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
 
-},{"./SyntheticUIEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticUIEvent.js","./getEventModifierState":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getEventModifierState.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticUIEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticUIEvent.js","./getEventModifierState":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getEventModifierState.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticUIEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -15864,7 +19625,7 @@ SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
 
-},{"./SyntheticEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticEvent.js","./getEventTarget":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getEventTarget.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticWheelEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticEvent.js","./getEventTarget":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getEventTarget.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticWheelEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -15925,7 +19686,7 @@ SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
 
-},{"./SyntheticMouseEvent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/SyntheticMouseEvent.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Transaction.js":[function(require,module,exports){
+},{"./SyntheticMouseEvent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/SyntheticMouseEvent.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Transaction.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -16166,7 +19927,7 @@ var Transaction = {
 module.exports = Transaction;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ViewportMetrics.js":[function(require,module,exports){
+},{"./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ViewportMetrics.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -16198,7 +19959,7 @@ var ViewportMetrics = {
 
 module.exports = ViewportMetrics;
 
-},{"./getUnboundedScrollPosition":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getUnboundedScrollPosition.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/accumulateInto.js":[function(require,module,exports){
+},{"./getUnboundedScrollPosition":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getUnboundedScrollPosition.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/accumulateInto.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -16264,7 +20025,7 @@ function accumulateInto(current, next) {
 module.exports = accumulateInto;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/adler32.js":[function(require,module,exports){
+},{"./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/adler32.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -16298,7 +20059,7 @@ function adler32(data) {
 
 module.exports = adler32;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/camelize.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/camelize.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -16330,7 +20091,7 @@ function camelize(string) {
 
 module.exports = camelize;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/camelizeStyleName.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/camelizeStyleName.js":[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -16372,7 +20133,7 @@ function camelizeStyleName(string) {
 
 module.exports = camelizeStyleName;
 
-},{"./camelize":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/camelize.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/containsNode.js":[function(require,module,exports){
+},{"./camelize":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/camelize.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/containsNode.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -16416,7 +20177,7 @@ function containsNode(outerNode, innerNode) {
 
 module.exports = containsNode;
 
-},{"./isTextNode":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/isTextNode.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/createArrayFrom.js":[function(require,module,exports){
+},{"./isTextNode":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/isTextNode.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/createArrayFrom.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -16502,7 +20263,7 @@ function createArrayFrom(obj) {
 
 module.exports = createArrayFrom;
 
-},{"./toArray":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/toArray.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/createFullPageComponent.js":[function(require,module,exports){
+},{"./toArray":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/toArray.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/createFullPageComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -16563,7 +20324,7 @@ function createFullPageComponent(tag) {
 module.exports = createFullPageComponent;
 
 }).call(this,require('_process'))
-},{"./ReactCompositeComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactCompositeComponent.js","./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/createNodesFromMarkup.js":[function(require,module,exports){
+},{"./ReactCompositeComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactCompositeComponent.js","./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/createNodesFromMarkup.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -16653,7 +20414,46 @@ function createNodesFromMarkup(markup, handleScript) {
 module.exports = createNodesFromMarkup;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js","./createArrayFrom":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/createArrayFrom.js","./getMarkupWrap":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getMarkupWrap.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/dangerousStyleValue.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js","./createArrayFrom":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/createArrayFrom.js","./getMarkupWrap":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getMarkupWrap.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/cx.js":[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule cx
+ */
+
+/**
+ * This function is used to mark string literals representing CSS class names
+ * so that they can be transformed statically. This allows for modularization
+ * and minification of CSS class names.
+ *
+ * In static_upstream, this function is actually implemented, but it should
+ * eventually be replaced with something more descriptive, and the transform
+ * that is used in the main stack should be ported for use elsewhere.
+ *
+ * @param string|object className to modularize, or an object of key/values.
+ *                      In the object case, the values are conditions that
+ *                      determine if the className keys should be included.
+ * @param [string ...]  Variable list of classNames in the string case.
+ * @return string       Renderable space-separated CSS className.
+ */
+function cx(classNames) {
+  if (typeof classNames == 'object') {
+    return Object.keys(classNames).filter(function(className) {
+      return classNames[className];
+    }).join(' ');
+  } else {
+    return Array.prototype.join.call(arguments, ' ');
+  }
+}
+
+module.exports = cx;
+
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/dangerousStyleValue.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -16711,7 +20511,7 @@ function dangerousStyleValue(name, value) {
 
 module.exports = dangerousStyleValue;
 
-},{"./CSSProperty":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/CSSProperty.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/deprecated.js":[function(require,module,exports){
+},{"./CSSProperty":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/CSSProperty.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/deprecated.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -16762,7 +20562,7 @@ function deprecated(namespace, oldName, newName, ctx, fn) {
 module.exports = deprecated;
 
 }).call(this,require('_process'))
-},{"./Object.assign":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/Object.assign.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/emptyFunction.js":[function(require,module,exports){
+},{"./Object.assign":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/Object.assign.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/emptyFunction.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -16796,7 +20596,7 @@ emptyFunction.thatReturnsArgument = function(arg) { return arg; };
 
 module.exports = emptyFunction;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/emptyObject.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/emptyObject.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -16820,7 +20620,7 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = emptyObject;
 
 }).call(this,require('_process'))
-},{"_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/escapeTextForBrowser.js":[function(require,module,exports){
+},{"_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/escapeTextForBrowser.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -16861,7 +20661,7 @@ function escapeTextForBrowser(text) {
 
 module.exports = escapeTextForBrowser;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/flattenChildren.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/flattenChildren.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -16930,7 +20730,7 @@ function flattenChildren(children) {
 module.exports = flattenChildren;
 
 }).call(this,require('_process'))
-},{"./ReactTextComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactTextComponent.js","./traverseAllChildren":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/traverseAllChildren.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/focusNode.js":[function(require,module,exports){
+},{"./ReactTextComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactTextComponent.js","./traverseAllChildren":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/traverseAllChildren.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/focusNode.js":[function(require,module,exports){
 /**
  * Copyright 2014, Facebook, Inc.
  * All rights reserved.
@@ -16959,7 +20759,7 @@ function focusNode(node) {
 
 module.exports = focusNode;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/forEachAccumulated.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/forEachAccumulated.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -16990,7 +20790,7 @@ var forEachAccumulated = function(arr, cb, scope) {
 
 module.exports = forEachAccumulated;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getActiveElement.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getActiveElement.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17019,7 +20819,7 @@ function getActiveElement() /*?DOMElement*/ {
 
 module.exports = getActiveElement;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getEventCharCode.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getEventCharCode.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17071,7 +20871,7 @@ function getEventCharCode(nativeEvent) {
 
 module.exports = getEventCharCode;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getEventKey.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getEventKey.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17176,7 +20976,7 @@ function getEventKey(nativeEvent) {
 
 module.exports = getEventKey;
 
-},{"./getEventCharCode":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getEventCharCode.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getEventModifierState.js":[function(require,module,exports){
+},{"./getEventCharCode":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getEventCharCode.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getEventModifierState.js":[function(require,module,exports){
 /**
  * Copyright 2013 Facebook, Inc.
  * All rights reserved.
@@ -17223,7 +21023,7 @@ function getEventModifierState(nativeEvent) {
 
 module.exports = getEventModifierState;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getEventTarget.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getEventTarget.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17254,7 +21054,7 @@ function getEventTarget(nativeEvent) {
 
 module.exports = getEventTarget;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getMarkupWrap.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getMarkupWrap.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -17371,7 +21171,7 @@ function getMarkupWrap(nodeName) {
 module.exports = getMarkupWrap;
 
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getNodeForCharacterOffset.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getNodeForCharacterOffset.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17446,7 +21246,7 @@ function getNodeForCharacterOffset(root, offset) {
 
 module.exports = getNodeForCharacterOffset;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getReactRootElementInContainer.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getReactRootElementInContainer.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17481,7 +21281,7 @@ function getReactRootElementInContainer(container) {
 
 module.exports = getReactRootElementInContainer;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getTextContentAccessor.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getTextContentAccessor.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17518,7 +21318,7 @@ function getTextContentAccessor() {
 
 module.exports = getTextContentAccessor;
 
-},{"./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/getUnboundedScrollPosition.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/getUnboundedScrollPosition.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17558,7 +21358,7 @@ function getUnboundedScrollPosition(scrollable) {
 
 module.exports = getUnboundedScrollPosition;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/hyphenate.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/hyphenate.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17591,7 +21391,7 @@ function hyphenate(string) {
 
 module.exports = hyphenate;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/hyphenateStyleName.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/hyphenateStyleName.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17632,7 +21432,7 @@ function hyphenateStyleName(string) {
 
 module.exports = hyphenateStyleName;
 
-},{"./hyphenate":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/hyphenate.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/instantiateReactComponent.js":[function(require,module,exports){
+},{"./hyphenate":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/hyphenate.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/instantiateReactComponent.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -17746,7 +21546,7 @@ function instantiateReactComponent(element, parentCompositeType) {
 module.exports = instantiateReactComponent;
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./ReactEmptyComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactEmptyComponent.js","./ReactLegacyElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactLegacyElement.js","./ReactNativeComponent":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactNativeComponent.js","./warning":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./ReactEmptyComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactEmptyComponent.js","./ReactLegacyElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactLegacyElement.js","./ReactNativeComponent":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactNativeComponent.js","./warning":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -17803,7 +21603,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/isEventSupported.js":[function(require,module,exports){
+},{"_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/isEventSupported.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17868,7 +21668,7 @@ function isEventSupported(eventNameSuffix, capture) {
 
 module.exports = isEventSupported;
 
-},{"./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/isNode.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/isNode.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17896,7 +21696,7 @@ function isNode(object) {
 
 module.exports = isNode;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/isTextInputElement.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/isTextInputElement.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17940,7 +21740,7 @@ function isTextInputElement(elem) {
 
 module.exports = isTextInputElement;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/isTextNode.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/isTextNode.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -17965,7 +21765,7 @@ function isTextNode(object) {
 
 module.exports = isTextNode;
 
-},{"./isNode":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/isNode.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/joinClasses.js":[function(require,module,exports){
+},{"./isNode":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/isNode.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/joinClasses.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -18006,7 +21806,7 @@ function joinClasses(className/*, ... */) {
 
 module.exports = joinClasses;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyMirror.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyMirror.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -18061,7 +21861,7 @@ var keyMirror = function(obj) {
 module.exports = keyMirror;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/keyOf.js":[function(require,module,exports){
+},{"./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/keyOf.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -18097,7 +21897,7 @@ var keyOf = function(oneKeyObj) {
 
 module.exports = keyOf;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/mapObject.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/mapObject.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -18150,7 +21950,7 @@ function mapObject(object, callback, context) {
 
 module.exports = mapObject;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/memoizeStringOnly.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/memoizeStringOnly.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -18184,7 +21984,7 @@ function memoizeStringOnly(callback) {
 
 module.exports = memoizeStringOnly;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/monitorCodeUse.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/monitorCodeUse.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -18218,7 +22018,7 @@ function monitorCodeUse(eventName, data) {
 module.exports = monitorCodeUse;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/onlyChild.js":[function(require,module,exports){
+},{"./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/onlyChild.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -18258,7 +22058,7 @@ function onlyChild(children) {
 module.exports = onlyChild;
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/performance.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/performance.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -18286,7 +22086,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = performance || {};
 
-},{"./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/performanceNow.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/performanceNow.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -18314,7 +22114,7 @@ var performanceNow = performance.now.bind(performance);
 
 module.exports = performanceNow;
 
-},{"./performance":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/performance.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/setInnerHTML.js":[function(require,module,exports){
+},{"./performance":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/performance.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/setInnerHTML.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -18392,7 +22192,7 @@ if (ExecutionEnvironment.canUseDOM) {
 
 module.exports = setInnerHTML;
 
-},{"./ExecutionEnvironment":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/shallowEqual.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ExecutionEnvironment.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/shallowEqual.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -18436,7 +22236,7 @@ function shallowEqual(objA, objB) {
 
 module.exports = shallowEqual;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/shouldUpdateReactComponent.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/shouldUpdateReactComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -18474,7 +22274,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 
 module.exports = shouldUpdateReactComponent;
 
-},{}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/toArray.js":[function(require,module,exports){
+},{}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/toArray.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -18546,7 +22346,7 @@ function toArray(obj) {
 module.exports = toArray;
 
 }).call(this,require('_process'))
-},{"./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/traverseAllChildren.js":[function(require,module,exports){
+},{"./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/traverseAllChildren.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2014, Facebook, Inc.
@@ -18729,7 +22529,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 module.exports = traverseAllChildren;
 
 }).call(this,require('_process'))
-},{"./ReactElement":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactElement.js","./ReactInstanceHandles":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/ReactInstanceHandles.js","./invariant":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/invariant.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/warning.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactElement.js","./ReactInstanceHandles":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/ReactInstanceHandles.js","./invariant":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/invariant.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/warning.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -18774,15 +22574,16 @@ if ("production" !== process.env.NODE_ENV) {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"./emptyFunction":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/emptyFunction.js","_process":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/browserify/node_modules/process/browser.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/react.js":[function(require,module,exports){
+},{"./emptyFunction":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/emptyFunction.js","_process":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js":[function(require,module,exports){
 module.exports = require('./lib/React');
 
-},{"./lib/React":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/lib/React.js"}],"/Users/Intelie/Workspace/pessoal/react-starter/scripts/components/Page.jsx":[function(require,module,exports){
+},{"./lib/React":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/lib/React.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/scripts/components/Page.jsx":[function(require,module,exports){
 "use strict";
 
 var React = require("react"),
-    Alert = require("react-bootstrap/lib/Alert"),
-    Page = React.createClass({
+    Alert = require("react-bootstrap/lib/Alert");
+
+var Page = React.createClass({
     displayName: "Page",
 
     render: function render() {
@@ -18800,7 +22601,7 @@ var React = require("react"),
                 React.createElement(
                     "p",
                     null,
-                    " -> go to Page.jsx"
+                    " go to Page.jsx"
                 )
             )
         );
@@ -18808,4 +22609,26 @@ var React = require("react"),
 });
 module.exports = Page;
 
-},{"react":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react/react.js","react-bootstrap/lib/Alert":"/Users/Intelie/Workspace/pessoal/react-starter/node_modules/react-bootstrap/lib/Alert.js"}]},{},["./scripts/app.jsx"]);
+},{"react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js","react-bootstrap/lib/Alert":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react-bootstrap/lib/Alert.js"}],"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/scripts/components/Sample.jsx":[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+
+var Page = React.createClass({
+    displayName: "Page",
+
+    render: function render() {
+        return React.createElement(
+            "div",
+            { className: "container" },
+            React.createElement(
+                "h1",
+                null,
+                "This a sample page"
+            )
+        );
+    }
+});
+module.exports = Page;
+
+},{"react":"/Users/marcussousa/Workspace/react-bootstrap-sass-starter-template/node_modules/react/react.js"}]},{},["./scripts/app.jsx"]);
